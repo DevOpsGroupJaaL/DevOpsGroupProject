@@ -5,16 +5,13 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import indexRouter from './routes/index.js';
 import usersRouter from './routes/users.js';
+import documentsRouter from './routes/document_test.js';
 import { fileURLToPath } from 'url';
-import s3Buckets from '../s3_listbuckets.js';
 
 var app = express();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-s3Buckets.run();
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +25,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/documents', documentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
