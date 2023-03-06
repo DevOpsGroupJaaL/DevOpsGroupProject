@@ -15,6 +15,8 @@ artifacts:
     # - yarn.lock
     - server/bin/www.js
     - server/app.js
+    - server/routes/*
+    - server/views/*
     - node_modules/**/*
     - package.json
     # - "build/**/*"

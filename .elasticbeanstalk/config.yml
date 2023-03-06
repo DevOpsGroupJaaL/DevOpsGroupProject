@@ -1,4 +1,6 @@
 branch-defaults:
+  DEVUVA-34-Setup-Research-CodeBuild:
+    environment: Jaal-WebApp
   default:
     environment: Jaal-WebApp
     group_suffix: null
