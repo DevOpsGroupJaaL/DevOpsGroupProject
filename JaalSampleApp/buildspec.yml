@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: latest
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm start
+
+artifacts:
+  files:
+    # - yarn.lock
+    - server/bin/www.js
+    - server/app.js
+    - node_modules/**/*
+    - package.json
+    # - "build/**/*"
+    # - ".platform/**/*" # AWS Elastic Beanstalk configuration files
+    # - ".ebextensions/**/*" # AWS Elastic Beanstalk configuration files
+  discard-paths: no
