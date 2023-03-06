@@ -20,6 +20,7 @@ artifacts:
     - server/utils/*
     - server/libs/*
     - public/*
+    - public/**/*
     - node_modules/**/*
     - package.json
     # - "build/**/*"
