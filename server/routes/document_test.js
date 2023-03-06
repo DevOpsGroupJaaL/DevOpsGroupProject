@@ -1,6 +1,6 @@
 import express from 'express';
 var router = express.Router();
-import s3Buckets from '../../s3_listbuckets.js';
+import s3Buckets from '../utils/s3_listbuckets.js';
 
 
 /* GET users listing. */
