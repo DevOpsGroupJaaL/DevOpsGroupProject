@@ -17,6 +17,7 @@ artifacts:
     - server/app.js
     - server/routes/*
     - server/views/*
+    - server/utils/*
     - node_modules/**/*
     - package.json
     # - "build/**/*"
