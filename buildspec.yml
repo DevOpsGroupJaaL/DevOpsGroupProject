@@ -13,10 +13,10 @@ phases:
 artifacts:
   files:
     # - yarn.lock
-    - server/bin/www.js
-    - server/app.js
-    - node_modules/**/*
-    - package.json
+    - src/server/bin/www.js
+    - src/server/app.js
+    - src/node_modules/**/*
+    - src/package.json
     # - "build/**/*"
     # - ".platform/**/*" # AWS Elastic Beanstalk configuration files
     # - ".ebextensions/**/*" # AWS Elastic Beanstalk configuration files
