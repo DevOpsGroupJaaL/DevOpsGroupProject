@@ -1,8 +1,9 @@
 // import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import { Button } from 'antd';
+// import { Button } from 'antd';
 import 'antd/dist/reset.css';
+import GlobalHeader from './global-header.js';
 
 // function App() {
 //   return (
@@ -27,7 +28,7 @@ import 'antd/dist/reset.css';
 
 const App = () => (
   <div className="App">
-    <Button type="primary">Button</Button>
+    <GlobalHeader />
   </div>
 );
 
