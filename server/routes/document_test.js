@@ -7,11 +7,14 @@ import putObject from '../utils/s3_putobject.js';
 // import cognitoUsers from '../utils/cognito_listusers.js';
 
 
+// GET list of associated/owned documents for current user from RDS
+// single file > query opa for permmission > return file from S3
+
 /* GET buckets listing. */
 router.get('/', function(req, res, next) {
   s3Buckets.run().then(s3Data => {
     console.log(s3Data);
-    res.send(s3Data[0].Name); // For unit tests.
+    // res.send(s3Data[0].Name); // For unit tests.
   })
 });
 
@@ -46,4 +49,5 @@ router.get('/users', function(req, res, next) {
 
 
 export default router;
+
 

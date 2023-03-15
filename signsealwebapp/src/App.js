@@ -1,9 +1,9 @@
 // import logo from './logo.svg';
 import './App.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import 'antd/dist/reset.css';
-
+import { listObjects } from './aws/s3_listobjects.js';
 // function App() {
 //   return (
 //     <div className="App">
@@ -25,10 +25,21 @@ import 'antd/dist/reset.css';
 //   );
 // }
 
-const App = () => (
+const App = () => {
+  useEffect(() => {
+    listObjects.get()
+  }, []);
+
+
+  return (
   <div className="App">
     <Button type="primary">Button</Button>
   </div>
 );
+}
+
+
+
+
 
 export default App;
