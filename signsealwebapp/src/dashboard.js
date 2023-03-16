@@ -1,19 +1,20 @@
 import { Tabs } from 'antd';
-import Dashboard_MyFiles from './dashboard_MyFiles.js';
-import Dashboard_AssociatedFiles from './dashboard_AssociatedFiles.js';
+import DashboardMyFiles from './dashboardMyFiles.js';
+import DashboardAssociatedFiles from './dashboardAssociatedFiles.js';
 
 const items = [
   {
     key: '1',
     label: `My Files`,
-    children: <Dashboard_MyFiles/>,
+    children: <DashboardMyFiles/>,
   },
   {
     key: '2',
     label: `Assorted Files`,
-    children: <Dashboard_AssociatedFiles/>,
+    children: <DashboardAssociatedFiles/>,
   },
 ];
+
 
 const Dashboard = () => (
     <Tabs defaultActiveKey="1" items={items} />

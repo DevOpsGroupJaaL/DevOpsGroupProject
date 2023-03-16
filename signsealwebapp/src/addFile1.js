@@ -1,4 +1,4 @@
-import { InboxOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { InboxOutlined } from '@ant-design/icons';
 import { 
     Form, 
     Input, 
@@ -10,9 +10,9 @@ import {
     Card,
   } from 'antd';
   
-  const { Content, Header } = Layout;
-  const { Step } = Steps;
-  const { Title } = Typography;
+  const { Content } = Layout;
+  // const { Step } = Steps;
+  // const { Title } = Typography;
   const { Dragger } = Upload
 
   const props = {
@@ -37,8 +37,7 @@ import {
   
   const UploadComponent = () => {
     return (
-        <Content>
-          <Card title="uploading files" align='left' icon={ <ArrowLeftOutlined/>} >
+          <Card title="Upload a new file" align='left'>
           <Form layout="vertical">
             <Form.Item
               label={
@@ -73,7 +72,6 @@ import {
 
           </Form>
         </Card>
-        </Content>
     );
   };
   
