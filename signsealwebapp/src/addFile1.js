@@ -10,6 +10,7 @@ import {
     Card,
   } from 'antd';
 import putObjectAsS3 from './aws/s3_putobject.js';
+import React, { useEffect } from 'react';
 
 
   const { Content } = Layout;
@@ -42,7 +43,18 @@ import putObjectAsS3 from './aws/s3_putobject.js';
     },
   };
 
+
+
   const UploadComponent = () => {
+
+    const [data, setData] = React.useState(null);
+
+    useEffect(() => {
+        // fetch("/api").then((res) => res.json()).then((data) => setData(data.message));
+        fetch("/api/users");
+      }, []
+    );
+
     return (
           <Card title="Upload a new file" align='left'>
           <Form layout="vertical">
@@ -82,4 +94,6 @@ import putObjectAsS3 from './aws/s3_putobject.js';
     );
   };
 
+
   export default UploadComponent;
+
