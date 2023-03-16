@@ -1,4 +1,4 @@
-import { Space, Table, Tag, Input, Button } from 'antd';
+import { Space, Table, Input, Button } from 'antd';
 import { useState } from 'react'; 
 
 const columns = [
@@ -40,7 +40,7 @@ const data = [
   },
 ];
 
-const Dashboard_MyFiles = () => {
+const DashboardMyFiles = () => {
     const [dataSource, setDataSource] = useState(data);
     const [value, setValue] = useState('');
 
@@ -58,14 +58,16 @@ const Dashboard_MyFiles = () => {
             }}
         />
     );
-    
+
     return (
         <> 
             <Space>
-                <div>
+              <div>
                 {FilterByNameInput}
-                </div>
-                <Button> Add File</Button>
+              </div>
+              <Button href="/upload" type='primary'>
+                Add File
+              </Button>
 
             </Space>
             <Table
@@ -79,4 +81,4 @@ const Dashboard_MyFiles = () => {
     );
 };
 
-export default Dashboard_MyFiles;
+export default DashboardMyFiles;

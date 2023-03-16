@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd';
+import { Table } from 'antd';
  
 const columns = [
   {
@@ -43,7 +43,7 @@ const data = [
   },
 ];
 
-const Dashboard_MyFiles = () => {
+const DashboardAssociatedFiles = () => {
   return (
       <Table
         columns={columns}
@@ -55,4 +55,4 @@ const Dashboard_MyFiles = () => {
   );
 };
 
-export default Dashboard_MyFiles;
+export default DashboardAssociatedFiles;
