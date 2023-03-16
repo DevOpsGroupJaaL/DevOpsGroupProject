@@ -1,9 +1,9 @@
 import { InboxOutlined } from '@ant-design/icons';
-import { 
-    Form, 
-    Input, 
-    Steps, 
-    Typography, 
+import {
+    Form,
+    Input,
+    Steps,
+    Typography,
     Upload,
     message,
     Layout,
