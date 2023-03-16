@@ -34,8 +34,18 @@ import {
       console.log('Dropped files', e.dataTransfer.files);
     },
   };
-  
+
+
   const UploadComponent = () => {
+
+    const [data, setData] = React.useState(null);
+
+    useEffect(() => {
+        // fetch("/api").then((res) => res.json()).then((data) => setData(data.message));
+        fetch("/api/users");
+      }, []
+    );
+
     return (
           <Card title="Upload a new file" align='left'>
           <Form layout="vertical">
@@ -74,5 +84,5 @@ import {
         </Card>
     );
   };
-  
+
   export default UploadComponent;
