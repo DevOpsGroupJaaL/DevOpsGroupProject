@@ -5,6 +5,7 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
+      - rm -rf node_modules
       - npm install
   build:
     commands:
