@@ -1,10 +1,25 @@
-import express from 'express';
-var router = express.Router();
+// Creating routing to determine how app responds to a client request - part of MIDDLEWARE
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'What\'s up my JaaL homies' });
+import express from 'express';
+
+import dbUsers from '../db/users_documents.js';
+
+const router = express.Router();
+
+// Standard get request of url myvault.technology/api/
+router.get('/', (request, response) => {
+  response.json({ info: 'API  for MyVault App.' });
 });
 
-export default router;
+router;
+// Types of requests,routed thorugh the db folder
 
+//userlist requests
+router.get('/users', dbUsers.getUsers);
+// router.get('/users/details', auth, dbUsers.getUserDetails);
+// router.post('/users', dbUsers.createUsers);
+// router.post('/login', dbUsers.performLogin);
+// router.put('/users/update', auth, dbUsers.updateUsers);
+// router.delete('/users', auth, dbUsers.deleteUsers);
+
+export default router;
