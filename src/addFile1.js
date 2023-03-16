@@ -1,15 +1,16 @@
 import { InboxOutlined } from '@ant-design/icons';
-import { 
-    Form, 
-    Input, 
-    Steps, 
-    Typography, 
+import {
+    Form,
+    Input,
+    Steps,
+    Typography,
     Upload,
     message,
     Layout,
     Card,
   } from 'antd';
-  
+import React, {useEffect} from 'react';
+
   const { Content } = Layout;
   // const { Step } = Steps;
   // const { Title } = Typography;
