@@ -3,6 +3,7 @@ import { Footer } from 'antd/es/layout/layout.js';
 import { useState } from 'react';
 import UploadComponent from './addFile1.js';
 import MyDocument from './addFile2.js';
+import Review from './addFile3.js';
 
 
 const steps = [
@@ -12,21 +13,23 @@ const steps = [
     content: <UploadComponent/>,
   },
   {
+    step: 2,
     title: 'View',
     content: <MyDocument/>,
   },
   {
+    step: 3,
     title: 'Review',
-    content: 'TODO',
+    content: <Review/>,
   },
 ];
 
 const items = steps.map((item) => ({
-  key: item.title,
+  key: item.step,
   title: item.title,
 }));
 
-const StepsComponent = ({setCurrentFooter}, items) => {
+const StepsComponent = ({setCurrentFooter}) => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
@@ -57,19 +60,19 @@ const StepsComponent = ({setCurrentFooter}, items) => {
     <>
       <div style={contentStyle}>{steps[current].content}</div>
       <div style={{marginTop: 24,}}>
+        {current > 0 && (
+          <Button style={{margin: '0 8px'}} onClick={() => prev()}>
+            Previous
+          </Button>
+        )}
         {current < steps.length - 1 && (
           <Button type="primary" onClick={() => next()}>
             Next
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => message.success('Processing complete!')}>
+          <Button type="primary" href="/">
             Done
-          </Button>
-        )}
-        {current > 0 && (
-          <Button style={{margin: '0 8px'}} onClick={() => prev()}>
-            Previous
           </Button>
         )}
       </div>
