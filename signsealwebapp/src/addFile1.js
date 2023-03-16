@@ -1,15 +1,17 @@
 import { InboxOutlined } from '@ant-design/icons';
-import { 
-    Form, 
-    Input, 
-    Steps, 
-    Typography, 
+import {
+    Form,
+    Input,
+    Steps,
+    Typography,
     Upload,
     message,
     Layout,
     Card,
   } from 'antd';
-  
+import putObjectAsS3 from './aws/s3_putobject.js';
+
+
   const { Content } = Layout;
   // const { Step } = Steps;
   // const { Title } = Typography;
@@ -17,8 +19,13 @@ import {
 
   const props = {
     name: 'file',
-    multiple: true,
+    multiple: false,
     accept: '.pdf',
+    customRequest: function (data) {
+      console.log(data)
+      putObjectAsS3.put(data.file)
+
+    },
     onChange(info) {
       const { status } = info.file;
       if (status !== 'uploading') {
@@ -34,7 +41,7 @@ import {
       console.log('Dropped files', e.dataTransfer.files);
     },
   };
-  
+
   const UploadComponent = () => {
     return (
           <Card title="Upload a new file" align='left'>
@@ -74,5 +81,5 @@ import {
         </Card>
     );
   };
-  
+
   export default UploadComponent;
