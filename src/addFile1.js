@@ -9,8 +9,8 @@ import {
     Layout,
     Card,
   } from 'antd';
-import React, {useEffect} from 'react';
-
+import React, { useEffect } from 'react';
+  
   const { Content } = Layout;
   // const { Step } = Steps;
   // const { Title } = Typography;
