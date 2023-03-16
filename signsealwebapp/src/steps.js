@@ -1,6 +1,8 @@
 import { Button, message, Steps, theme } from 'antd';
+import { Footer } from 'antd/es/layout/layout.js';
 import { useState } from 'react';
 import UploadComponent from './addFile1.js';
+import MyDocument from './addFile2.js';
 
 
 const steps = [
@@ -11,7 +13,7 @@ const steps = [
   },
   {
     title: 'View',
-    content: 'TODO',
+    content: <MyDocument/>,
   },
   {
     title: 'Review',
@@ -19,22 +21,26 @@ const steps = [
   },
 ];
 
+const items = steps.map((item) => ({
+  key: item.title,
+  title: item.title,
+}));
 
-const StepsComponent = () => {
+const StepsComponent = ({setCurrentFooter}, items) => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
+
   const next = () => {
     setCurrent(current + 1);
+    setCurrentFooter(current + 1);
   };
   const prev = () => {
     setCurrent(current - 1);
+    setCurrentFooter(current - 1);
   };
 
-  const items = steps.map((item) => ({
-    key: item.title,
-    title: item.title,
-  }));
+
 
   const contentStyle = {
     lineHeight: '260px',
@@ -50,11 +56,7 @@ const StepsComponent = () => {
   return (
     <>
       <div style={contentStyle}>{steps[current].content}</div>
-      <div
-        style={{
-          marginTop: 24,
-        }}
-        >
+      <div style={{marginTop: 24,}}>
         {current < steps.length - 1 && (
           <Button type="primary" onClick={() => next()}>
             Next
@@ -66,18 +68,20 @@ const StepsComponent = () => {
           </Button>
         )}
         {current > 0 && (
-          <Button
-            style={{
-              margin: '0 8px',
-            }}
-            onClick={() => prev()}
-          >
+          <Button style={{margin: '0 8px'}} onClick={() => prev()}>
             Previous
           </Button>
         )}
       </div>
-      <Steps current={current} items={items} />
     </>
   );
 };
-export default StepsComponent;
+
+const StepsFooter = ({currentFooter}) => {
+ 
+  return(
+  <Steps current={currentFooter} items={items} />
+  );};
+
+
+export { StepsComponent, StepsFooter };
