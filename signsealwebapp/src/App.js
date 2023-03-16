@@ -3,7 +3,8 @@ import './App.css';
 import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import 'antd/dist/reset.css';
-import { listObjects } from './aws/s3_listobjects.js';
+// import { listObjects } from './aws/s3_listobjects.js';
+import GetCurrentUser from './aws/cognito_currentUser.js'
 // function App() {
 //   return (
 //     <div className="App">
@@ -27,13 +28,13 @@ import { listObjects } from './aws/s3_listobjects.js';
 
 const App = () => {
   useEffect(() => {
-    listObjects.get()
+    // listObjects.get()
   }, []);
 
 
   return (
   <div className="App">
-    <Button type="primary">Button</Button>
+    <Button type="primary" onClick={GetCurrentUser}>Button</Button>
   </div>
 );
 }

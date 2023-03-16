@@ -1,7 +1,8 @@
 
 // This command supersedes the ListObjectsCommand and is the recommended way to list objects.
 import {ListObjectsV2Command} from "@aws-sdk/client-s3";
-import { s3Client } from "../libs/s3Client.js"; // Helper function that creates an Amazon S3 service client module.
+import { s3Client } from "./libs/s3Client.js"; // Helper function that creates an Amazon S3 service client module.
+
 
 
 const get = async (MaxKeys = 1000) => {
@@ -32,5 +33,6 @@ const get = async (MaxKeys = 1000) => {
   }
 };
 
+get();
 export default {get}
 

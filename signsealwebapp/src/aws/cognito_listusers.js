@@ -1,24 +1,32 @@
-/**
- * Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
- * SPDX-License-Identifier: Apache-2.0
- */
+import { ListUsersCommand } from "@aws-sdk/client-cognito-identity-provider";
+import { cognitoClient } from './libs/cognitoClient';
+const ListUsers = (poolID) => {
 
-import {
-    ListUsersCommand,
-    CognitoIdentityProviderClient,
-  } from "@aws-sdk/client-cognito-identity-provider";
-  import { createClientForDefaultRegion } from "../../libs/utils/util-aws-sdk.js";
+    const client = cognitoClient;
 
-  /** snippet-start:[javascript.v3.cognito-idp.actions.ListUsers] */
-  const get = async ({ userPoolId }) => {
-    const client = createClientForDefaultRegion(CognitoIdentityProviderClient);
+    const params = {
+      UserPoolId: poolID,
+    };
 
-    const command = new ListUsersCommand({
-      UserPoolId: userPoolId,
-    });
+    const command = new ListUsersCommand(params);
 
-    return client.send(command);
-  };
-  /** snippet-end:[javascript.v3.cognito-idp.actions.ListUsers] */
+    client.send(command).then(
+      (data) => {
+        console.log(data.Users[0]);
+        return data.Users
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+};
 
-  export { get };
+
+
+ListUsers("eu-central-1_CNF5aGqUw");
+export default ListUsers;
+
+
+
+
+
