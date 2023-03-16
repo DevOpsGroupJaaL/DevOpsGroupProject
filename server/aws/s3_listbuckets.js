@@ -13,7 +13,6 @@ const run = async () => {
   }
 };
 
-run();
 export default {run}
 
 

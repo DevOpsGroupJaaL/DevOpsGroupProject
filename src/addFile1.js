@@ -9,7 +9,6 @@ import {
     Layout,
     Card,
   } from 'antd';
-import putObjectAsS3 from './aws/s3_putobject.js';
 import React, { useEffect } from 'react';
 
 
@@ -24,7 +23,15 @@ import React, { useEffect } from 'react';
     accept: '.pdf',
     customRequest: function (data) {
       console.log(data)
-      putObjectAsS3.put(data.file)
+      // putObjectAsS3.put(data.file)
+      fetch("/api/s3/putObject", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/pdf"
+        },
+        body: data.file
+      }).then((res) => res.json())
+        // .then((data) => setData(data.message));
 
     },
     onChange(info) {
@@ -51,7 +58,7 @@ import React, { useEffect } from 'react';
 
     useEffect(() => {
         // fetch("/api").then((res) => res.json()).then((data) => setData(data.message));
-        fetch("/api/users");
+        // fetch("/api/users");
       }, []
     );
 

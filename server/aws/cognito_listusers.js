@@ -1,5 +1,5 @@
 import { ListUsersCommand } from "@aws-sdk/client-cognito-identity-provider";
-import { cognitoClient } from './libs/cognitoClient';
+import { cognitoClient } from './libs/cognitoClient.js';
 const ListUsers = (poolID) => {
 
     const client = cognitoClient;
@@ -12,7 +12,7 @@ const ListUsers = (poolID) => {
 
     client.send(command).then(
       (data) => {
-        console.log(data.Users[0]);
+        console.log(data.Users);
         return data.Users
       },
       (error) => {
