@@ -10,6 +10,8 @@ const getUsers = (request, response) => { //assigning anonymous function to cons
     // handle the results
     console.log("test");
     console.log(results[0]);
+    response.set('Content-Type', 'application/json');
+    response.status(200).json({ results });
   })
   .catch(error => {
     // handle the error
