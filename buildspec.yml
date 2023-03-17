@@ -5,7 +5,6 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
-      - rm -rf /var/app/current/node_modules
       - npm install
   build:
     commands:
@@ -14,14 +13,10 @@ phases:
 artifacts:
   files:
     # - yarn.lock
-    - src/bin/www.js
-    - src/app.js
-    - src/routes/*
-    - src/views/*
-    - src/utils/*
-    - src/libs/*
+    - src/*
     - public/*
-    - public/**/*
+    - server/*
+    - server/**/*
     - node_modules/**/*
     - package.json
     # - "build/**/*"
