@@ -43,7 +43,12 @@ import React, { useEffect } from 'react';
 
     useEffect(() => {
         // fetch("/api").then((res) => res.json()).then((data) => setData(data.message));
-        fetch("/api/users");
+        fetch('/api/users')
+        .then((response) => response.text())
+        .then((body) => {
+            console.log(body);
+        });
+        console.log("test fetch");
       }, []
     );
 
