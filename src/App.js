@@ -9,7 +9,7 @@ import {StepsComponent, StepsFooter }from './steps.js';
 
 const {Content, Footer}  = Layout;
 
-const App = () =>{ 
+const App = () =>{
   const [currentFooter, setCurrentFooter] = useState(0);
 
   return (
@@ -23,8 +23,8 @@ const App = () =>{
               <Route path="/upload" element={<StepsComponent setCurrentFooter={setCurrentFooter}/>}/>
             </Routes>
           </Content>
-            
-        
+
+
           <Footer>
             <Routes>
               <Route path="/upload" element={<StepsFooter currentFooter={currentFooter}/>}/>
