@@ -11,6 +11,7 @@ phases:
       - npm run build
       - echo Build Started
       - cd server && npm install
+      - cd ..
       - echo server installed
 
 artifacts:
