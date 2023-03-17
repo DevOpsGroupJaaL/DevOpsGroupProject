@@ -6,6 +6,7 @@ phases:
       nodejs: latest
     commands:
       - npm install
+      - cd server && npm install
   build:
     commands:
       - echo Build Started
