@@ -1,5 +1,6 @@
 {
   "name": "signsealwebapp",
+  "homepage": ".",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -27,7 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:7000",
+  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": [
       "react-app",
