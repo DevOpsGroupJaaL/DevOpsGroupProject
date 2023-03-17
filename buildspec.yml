@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
-      - npm clean-install
+      - npm install
   build:
     commands:
       - echo Build Started
