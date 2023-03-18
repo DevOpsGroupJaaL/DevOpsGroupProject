@@ -16,10 +16,11 @@ router;
 
 //userlist requests
 router.get('/users', dbUsers.getUsers);
-// router.get('/users/details', auth, dbUsers.getUserDetails);
-// router.post('/users', dbUsers.createUsers);
-// router.post('/login', dbUsers.performLogin);
-// router.put('/users/update', auth, dbUsers.updateUsers);
-// router.delete('/users', auth, dbUsers.deleteUsers);
+router.post('/users', dbUsers.postUsers);
+router.post('/userRightsDelete', dbUsers.postUserRightsDelete);
+router.post('/userRightsAdd', dbUsers.postUserRightsAdd);
+router.post('/documents', dbUsers.postDocuments);
+router.get('/userOwnedDocuments/:userid', dbUsers.getUserOwnedDocuments);
+router.get('/userAccessibleDocuments/:userid', dbUsers.getUserAccessibleDocuments);
 
 export default router;
