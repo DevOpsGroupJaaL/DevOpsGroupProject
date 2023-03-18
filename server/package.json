@@ -1,5 +1,6 @@
 {
   "name": "server",
+  "homepage": ".",
   "version": "1.0.0",
   "description": "integrate React and Node.js Express Rest Apis on same server",
   "main": "index.js",

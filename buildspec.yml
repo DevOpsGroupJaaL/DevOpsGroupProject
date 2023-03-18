@@ -8,22 +8,23 @@ phases:
       - npm install
   build:
     commands:
+      - npm run build
       - echo Build Started
+      - cd server && npm install
+      - cd ..
+      - echo server installed
 
 artifacts:
   files:
     # - yarn.lock
-    - src/bin/www.js
-    - src/app.js
-    - src/routes/*
-    - src/views/*
-    - src/utils/*
-    - src/libs/*
+    - src/*
     - public/*
-    - public/**/*
+    - server/*
+    - server/**/*
     - node_modules/**/*
     - package.json
-    # - "build/**/*"
+    - build/*
+    - build/**/*
     # - ".platform/**/*" # AWS Elastic Beanstalk configuration files
     # - ".ebextensions/**/*" # AWS Elastic Beanstalk configuration files
   discard-paths: no

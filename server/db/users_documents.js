@@ -8,8 +8,11 @@ const getUsers = (request, response) => { //assigning anonymous function to cons
   pool.query('SELECT * FROM users')
   .then(results => {
     // handle the results
+    const res = results[0]
     console.log("test");
     console.log(results[0]);
+    response.set('Content-Type', 'application/json');
+    response.status(200).json({ res });
   })
   .catch(error => {
     // handle the error

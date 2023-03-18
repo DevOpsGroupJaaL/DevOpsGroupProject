@@ -1,6 +1,8 @@
 branch-defaults:
   DEVUVA-34-Setup-Research-CodeBuild:
     environment: Jaal-WebApp
+  DEVUVA-69-Add-ORM-to-communicate-to-AWS-RDS-DB:
+    environment: test-env-con-2
   default:
     environment: Jaal-WebApp
     group_suffix: null
@@ -9,6 +11,9 @@ environment-defaults:
     branch: null
     repository: null
   Jaal-WebApp:
+    branch: null
+    repository: null
+  test-env-con-2:
     branch: null
     repository: null
 global:
@@ -23,5 +28,5 @@ global:
   platform_version: null
   profile: eb-cli
   repository: null
-  sc: null
+  sc: git
   workspace_type: Application
