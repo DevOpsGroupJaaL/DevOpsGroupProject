@@ -12,11 +12,11 @@ const { Content, Footer } = Layout;
 
 const App = () => {
 	const [currentFooter, setCurrentFooter] = useState(0);
-	const [certModalVisible, setCertModalVisible] = useState(false);
+	const [certModalVisible, setCertModalVisible] = useState(true);
 
 	if (true && !certModalVisible) {
 		// TODO: replace with logic checking for logged in user
-		setCertModalVisible(true);
+		// setCertModalVisible(true);
 	}
 
 	return (

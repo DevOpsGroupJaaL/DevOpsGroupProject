@@ -1,12 +1,12 @@
-import dotenv from 'dotenv'
-dotenv.config(); //module loading environment variables from .env file
+import dotenv from 'dotenv' //module loading environment variables from .env file
 import bodyParser from 'body-parser';
 import express from 'express';
+
+import mysql from 'mysql2/promise';
+dotenv.config();
 const app = express();
 
 app.use(bodyParser.json())
-
-import mysql from 'mysql2/promise';
 
 console.log(process.env.DB_HOST);
 

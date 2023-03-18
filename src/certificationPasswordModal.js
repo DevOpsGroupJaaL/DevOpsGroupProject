@@ -26,6 +26,20 @@ const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 	const handleOk = () => {
 		// TODO send the pw to where ever
 		console.log('send pw');
+
+		// fetch('/api/users')
+        // .then((response) => response.text())
+        // .then((body) => {
+        //   console.log(body);
+        // });
+		fetch('/api/users', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({'email': 'newtest'}),
+		})
+			.then((response) => console.log(response));
 		setIsModalOpen(false);
 	};
 

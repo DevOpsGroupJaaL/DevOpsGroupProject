@@ -11,12 +11,13 @@ router.get('/', (request, response) => {
   response.json({ info: 'API  for MyVault App.' });
 });
 
-router;
+
 // Types of requests,routed thorugh the db folder
 
 //userlist requests
 router.get('/users', dbUsers.getUsers);
 router.post('/users', dbUsers.postUsers);
+router.get('/users/:email', dbUsers.getUserIdByEmail);
 router.post('/userRightsDelete', dbUsers.postUserRightsDelete);
 router.post('/userRightsAdd', dbUsers.postUserRightsAdd);
 router.post('/documents', dbUsers.postDocuments);

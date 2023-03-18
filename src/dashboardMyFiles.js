@@ -1,24 +1,8 @@
 import { Space, Table, Input, Button } from 'antd';
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react';
 import Popup from './assign.js';
 
-
-const data = [
-  {
-    key: '1',
-    path: '/path/to/my.pdf',
-    name: 'Pdf file name',
-    status: 'pending',
-    owner: 'id  '
-  },
-  {
-    key: '2',
-    path: '/path/to/my.pdf',
-    name: 'Pdf file name',
-    status: 'pending',
-    owner: 'id  '
-  },
-];
+let data = [];
 
 const DashboardMyFiles = () => {
     const [dataSource, setDataSource] = useState(data);
@@ -30,6 +14,14 @@ const DashboardMyFiles = () => {
       setIsModalOpen(true);
     };
 
+
+    useEffect(() => {
+      fetch('/api/users/test@test.com') // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
+        .then((response) => response.text())
+        .then((body) => {
+          console.log(body);
+        });
+    }, [])
 
     const columns = [
       {
@@ -77,7 +69,7 @@ const DashboardMyFiles = () => {
     );
 
     return (
-        <> 
+        <>
             <Space>
               <div>
                 {FilterByNameInput}
@@ -93,9 +85,13 @@ const DashboardMyFiles = () => {
                 position: 'bottomRight',
                 }}
                 dataSource={dataSource}
-            /> 
+            />
         </>
     );
 };
 
+
+
 export default DashboardMyFiles;
+
+

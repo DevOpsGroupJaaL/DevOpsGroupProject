@@ -2,7 +2,18 @@ import React, { useState } from 'react';
 import { Button, Modal, Select   } from 'antd';
 
 // TODO get users from backend
-const OPTIONS = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+// useEffect(() => {
+//   fetch("/api/cognito/listUsers")
+//     .then(res => {
+//       OPTIONS = res.body;
+//     }
+//       )
+// }, [])
+
+// userEvent.Attributes
+// username
+
+let OPTIONS = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
 
 const Popup = ({isModalOpen, setIsModalOpen}) => {
 
