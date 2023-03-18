@@ -2,6 +2,7 @@ import { Space, Table, Input, Button, Badge, Tag } from "antd";
 import { useState, useEffect } from "react";
 import Popup from "./assign.js";
 import { render } from "@testing-library/react";
+import { getCurrentUser } from "./auth.js";
 
 let data = [];
 
@@ -34,6 +35,21 @@ const DashboardMyFiles = () => {
   }, []);
 
   useEffect(() => {
+    // localStorage.getItem("accessToken")
+    // getCurrentUser(localStorage.getItem("accessToken"))
+    //   .then((response) => response.text()) 
+    //   .then((body) => {
+    //     const parsedBody = JSON.parse(body);
+    //     let userId = parsedBody.user_id;
+    //     fetch(`/api/userOwnedDocuments/${userId}`)
+    //       .then((response) => response.text())
+    //       .then((body) => {
+    //         const parsedBody = JSON.parse(body);
+    //         data = parsedBody.res;
+    //         setDataSource(data);
+    //       });
+    //   });
+
     fetch("/api/users/test@test.com") // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
       .then((response) => response.text())
       .then((body) => {
@@ -54,7 +70,7 @@ const DashboardMyFiles = () => {
       title: "File",
       dataIndex: "document_name",
       key: "document_name",
-      render: (text) => <a>{text}</a>,
+      render: (text, record) => <Button type="link" href={`view?file=${record.document_name}`}>{text}</Button>,
     },
     {
       title: "Associated users",

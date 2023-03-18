@@ -59,8 +59,8 @@ const App = () => {
     },
   ];
 
+  const urlParams = new URLSearchParams(window.location.search);
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
     const authorizationCode = urlParams.get("code");
     // setHasToken(false)
       if (
@@ -130,6 +130,7 @@ const App = () => {
                     />
                   }
                 />
+                <Route path="/view/*" element={<MyDocument pdfFile={null} pdfName={urlParams.get('file')} documentType="aws" />} />
               </Routes>
             </Content>
 
