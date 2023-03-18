@@ -12,7 +12,7 @@ const ListUsers = (poolID) => {
 
     client.send(command).then(
       (data) => {
-        console.log(data.Users);
+        // console.log(data.Users);
         return data.Users
       },
       (error) => {
@@ -23,7 +23,7 @@ const ListUsers = (poolID) => {
 
 
 
-ListUsers("eu-central-1_CNF5aGqUw");
+// ListUsers("eu-central-1_CNF5aGqUw");
 export default ListUsers;
 
 

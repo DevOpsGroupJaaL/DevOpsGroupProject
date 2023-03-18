@@ -9,8 +9,8 @@ const get = async (Key) => {
     try {
         console.log("Key: ", Key);
         let response =  await s3Client.send(new GetObjectCommand({Bucket: "jaal-dsdss-documents", Key }));
-        console.log("response: ", response);
-        return response;
+        console.log("response: ", response.Body);
+        return response.Body;
     } catch (err) {
         console.error(err);
     }

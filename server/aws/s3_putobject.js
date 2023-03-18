@@ -1,24 +1,20 @@
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { s3Client } from "./libs/s3Client.js"; // Helper function that creates an Amazon S3 service client module.
 
+const BUCKET = "jaal-dsdss-documents"
 
-const put = async (req, res, next) => {
-  console.log(req.body)
-  console.log("STONKS IN PUT")
-  // console.log(file);
+const put = (file, fileName) => {
   const command = new PutObjectCommand({
-    Bucket: "jaal-dsdss-documents",
-    Key: res.name,
-    Body: res.file,
-    //j w
+    Bucket: BUCKET,
+    Key: fileName,
+    Body: file.buffer,
   });
 
-  try {
-    const response = await s3Client.send(command);
-    console.log(response);
-  } catch (err) {
-    console.error(err);
-  }
+  return s3Client.send(command).then((resp) => {
+      console.log(resp)
+      return resp.$metadata.httpStatusCode
+    }).catch()
+
 };
 
 export default {put};
