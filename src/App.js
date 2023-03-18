@@ -10,8 +10,25 @@ import UploadComponent from "./addFile1.js";
 import MyDocument from "./addFile2.js";
 import Review from "./addFile3.js";
 import CertModal from './certificationPasswordModal.js';
+import './App.css';
+import 'antd/dist/reset.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Layout, Button } from 'antd';
+import GlobalHeader from './global-header.js';
+import Dashboard from './dashboard.js';
+import {StepsComponent, StepsFooter }from './steps.js';
+import React, { useState, useEffect } from 'react';
+import {
+  CognitoUserPool,
+  CognitoUser,
+  AuthenticationDetails,
+} from 'amazon-cognito-identity-js';
+import {CognitoIdentityServiceProvider} from 'aws-sdk';
+
+import { getToken, logout } from './auth.js';
 
 const { Content, Footer } = Layout;
+const cognito = new CognitoIdentityServiceProvider({region: 'eu-central-1'});
 
 const App = () => {
   const [currentFooter, setCurrentFooter] = useState(0);
@@ -20,6 +37,9 @@ const App = () => {
   const [nextButton, setNextButton] = useState(false);
   const [certificatePass, setCertificatePassword] = useState(null);
 	const [certModalVisible, setCertModalVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasToken, setHasToken] = useState(false);
+  const tokenLoaded = false;
 
 	if (certModalVisible) {
 		// TODO: replace with logic checking for logged in user
@@ -54,7 +74,44 @@ const App = () => {
     },
   ];
 
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const authorizationCode = urlParams.get('code');
+    // setHasToken(false)
+    if(localStorage.getItem('accessToken') && localStorage.getItem('idToken')) {
+      setHasToken(true);
+      setIsLoggedIn(true);
+    } else {
+    if (!isLoggedIn && !authorizationCode) {
+      console.log({isLoggedIn});
+      handleLogin();
+      // setIsLoggedIn(true);
+      // setHasToken(true);
+    }
+    if (authorizationCode) {
+      getToken(authorizationCode).then(() => {
+        setHasToken(true);
+        setIsLoggedIn(true);
+      });
+    } 
+  }
+  }, [hasToken]);
+
+
+
+  const handleLogin = () => {
+    const appClientId = 'mevtf1fkfoarqpgn79s4ade6t';
+    const redirectUri = 'http://localhost:3000/dashboard';
+    const authEndpoint = `https://signseal.auth.eu-central-1.amazoncognito.com/login?client_id=${appClientId}&response_type=code&scope=email+openid&redirect_uri=${redirectUri}`;
+    window.location.href = authEndpoint;
+    setIsLoggedIn(true);
+  };
+
+if(hasToken) {
   return (
+    // ternary if
+    // (hasToken & isLoggedIn) ? (
     <BrowserRouter>
       <div className="App">
         <Layout style={{ minHeight: "100vh" }}>
@@ -62,7 +119,8 @@ const App = () => {
           <Content>
           <CertModal isModalOpen={certModalVisible} setIsModalOpen={setCertModalVisible} />
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard/*" element={<Dashboard />} />
               <Route
                 path="/upload"
                 element={
@@ -77,6 +135,10 @@ const App = () => {
                 }
               />
             </Routes>
+            <Button onClick={logout}>Logout</Button>
+            <div>
+              {console.log({})}
+            </div>
           </Content>
 
           <Footer>
