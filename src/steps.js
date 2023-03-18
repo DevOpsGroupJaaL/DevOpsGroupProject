@@ -2,7 +2,11 @@ import { Button, message, Steps, theme, Spin } from "antd";
 import { Footer } from "antd/es/layout/layout.js";
 import { useState } from "react";
 
-const StepsComponent = ({ steps, setCurrentFooter, nextButton, certificatePass, pdfName }) => {
+// TEMP TO BE REPLACED WITH CURRENT USER STUFF
+const NAME = "Aleandro Mifsud"
+const USERNAME = "ale"
+
+const StepsComponent = ({ steps, setCurrentFooter, nextButton, certificatePass, pdfName, setPdfFile }) => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
   const [disableSignButton, setDisabled] = useState(false);
@@ -45,23 +49,22 @@ const StepsComponent = ({ steps, setCurrentFooter, nextButton, certificatePass, 
             disabled={disableSignButton}
             type="primary"
             onClick={() => {
-              // setDisabled(true)
+              setDisabled(true)
               fetch("/api/dss/sign", {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
-                  "certificate_pass": certificatePass,
-                  "document_dir": pdfName,
-                  "name": "Aleandro Mifsud",
-                  "username": "ale"
+                  'certificate_pass': certificatePass,
+                  'document_dir': pdfName,
+                  'name': NAME,
+                  'username': USERNAME
               })
               }).then((response) => {
-
-                  console.log(response);
-                  //    next();
+                  if(response.status === 201) {
+                      setPdfFile(null);
+                      next();
+                  }
               });
-
-
             }}
           >
             <Spin spinning={disableSignButton}/>

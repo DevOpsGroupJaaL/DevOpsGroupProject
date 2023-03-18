@@ -21,9 +21,9 @@ const App = () => {
   const [certificatePass, setCertificatePassword] = useState(null);
 	const [certModalVisible, setCertModalVisible] = useState(false);
 
-	if (true && !certModalVisible) {
+	if (certModalVisible) {
 		// TODO: replace with logic checking for logged in user
-		setCertModalVisible(true);
+		setCertModalVisible(false);
 	}
   const steps = [
     {
@@ -72,6 +72,7 @@ const App = () => {
                     setCurrentFooter={setCurrentFooter}
                     certificatePass={certificatePass}
                     pdfName={pdfName}
+                    setPdfFile={setPdfFile}
                   />
                 }
               />

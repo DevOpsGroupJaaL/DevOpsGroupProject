@@ -50,7 +50,6 @@ router.put('/cognito/logOut', logOut);
 router.get('/cognito/currentUser', currentUser);
 router.post('/dss/sign', function (req, res) {
   const payload = req.body
-  console.log(payload)
   signDocument(payload.document_dir, payload.username, payload.name, payload.certificate_pass).then(status => {
     res.status(status);
     res.json({status: status});
@@ -59,7 +58,14 @@ router.post('/dss/sign', function (req, res) {
 })
 
 router.post('/dss/certificate', function (req, res) {
-  createCertificate()
+  const payload = req.body
+  console.log(payload)
+  createCertificate(payload.username, payload.full_name, payload.password)
+  .then(status => {
+    res.status(status);
+    res.json({status: status});
+    res.end();
+  });
 })
 router.post('/users', dbUsers.postUsers);
 router.post('/userRightsDelete', dbUsers.postUserRightsDelete);

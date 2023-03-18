@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Button, Input, Modal, Space } from 'antd';
 import { useEffect } from 'react';
 
+// TEMP TO BE REPLACED WITH CURRENT USER DATA
+const USERNAME = "mifsud"
+const NAME = "Aleandro Mifsud"
+
 const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -24,9 +28,21 @@ const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 	};
 
 	const handleOk = () => {
-		// TODO send the pw to where ever
-		console.log('send pw');
-		setIsModalOpen(false);
+		fetch("/api/dss/certificate", {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				'full_name': NAME,
+				'password': password,
+				'username': USERNAME
+			})
+		  }).then((response) => {
+			  const status = response.status
+
+			  if(status == 201) {
+				setIsModalOpen(false);
+			  }
+		  });
 	};
 
 	return (

@@ -8,7 +8,6 @@ const GetCurrentUser = () => {
 
     client.send(command).then(
       (data) => {
-        console.log(data);
         return data.UserAttributes;
     },
       (error) => {

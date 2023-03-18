@@ -16,8 +16,7 @@ const MyDocument = ({pdfFile, pdfName, documentType}) => {
 
     function getDocument() {
         if(documentType === "aws") {
-        const fileName = "GanttChart.pdf"
-        fetch(`/api/s3/getObject/${fileName}`, {
+        fetch(`/api/s3/getObject/${pdfName}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +24,6 @@ const MyDocument = ({pdfFile, pdfName, documentType}) => {
           })
           .then((res) => res.json())
           .then(data => {
-            console.log(data)
             setOutput(data);
           });
         } else if(documentType === "local") {
