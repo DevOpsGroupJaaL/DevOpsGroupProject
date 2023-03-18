@@ -9,6 +9,8 @@ import { StepsComponent, StepsFooter } from "./steps.js";
 import UploadComponent from "./addFile1.js";
 import MyDocument from "./addFile2.js";
 import Review from "./addFile3.js";
+import CertModal from './certificationPasswordModal.js';
+
 const { Content, Footer } = Layout;
 
 const App = () => {
@@ -17,7 +19,12 @@ const App = () => {
   const [pdfName, setPdfName] = useState([]);
   const [nextButton, setNextButton] = useState(false);
   const [certificatePass, setCertificatePassword] = useState(null);
+	const [certModalVisible, setCertModalVisible] = useState(false);
 
+	if (true && !certModalVisible) {
+		// TODO: replace with logic checking for logged in user
+		setCertModalVisible(true);
+	}
   const steps = [
     {
       step: 1,
@@ -53,6 +60,7 @@ const App = () => {
         <Layout style={{ minHeight: "100vh" }}>
           <GlobalHeader />
           <Content>
+          <CertModal isModalOpen={certModalVisible} setIsModalOpen={setCertModalVisible} />
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route

@@ -24,7 +24,6 @@ router.get('/', (request, response) => {
 // Types of requests,routed thorugh the db folder
 
 //userlist requests
-router.get('/users', dbUsers.getUsers);
 router.get('/s3/getObject/:name',  function (req, res, next) {
   // console.log(req);
   const awsFile =  getS3Object.get(req.params.name);
@@ -55,16 +54,18 @@ router.post('/dss/sign', function (req, res) {
   signDocument(payload.document_dir, payload.username, payload.name, payload.certificate_pass).then(status => {
     res.status(status);
     res.json({status: status});
+    res.end();
   })
 })
 
 router.post('/dss/certificate', function (req, res) {
   createCertificate()
 })
-// router.get('/users/details', auth, dbUsers.getUserDetails);
-// router.post('/users', dbUsers.createUsers);
-// router.post('/login', dbUsers.performLogin);
-// router.put('/users/update', auth, dbUsers.updateUsers);
-// router.delete('/users', auth, dbUsers.deleteUsers);
+router.post('/users', dbUsers.postUsers);
+router.post('/userRightsDelete', dbUsers.postUserRightsDelete);
+router.post('/userRightsAdd', dbUsers.postUserRightsAdd);
+router.post('/documents', dbUsers.postDocuments);
+router.get('/userOwnedDocuments/:userid', dbUsers.getUserOwnedDocuments);
+router.get('/userAccessibleDocuments/:userid', dbUsers.getUserAccessibleDocuments);
 
 export default router;

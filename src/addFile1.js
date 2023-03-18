@@ -60,16 +60,42 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
     const [data, setData] = React.useState(null);
 
-    useEffect(() => {
-        // fetch("/api").then((res) => res.json()).then((data) => setData(data.message));
-        fetch('/api/users')
-        .then((response) => response.text())
-        .then((body) => {
-          console.log(body);
-        });
-        console.log("test fetch");
-      }, []
-    );
+    // useEffect(() => {
+    //     // fetch("/api").then((res) => res.json()).then((data) => setData(data.message));
+    //     // fetch('/api/users')
+    //     // .then((response) => response.text())
+    //     // .then((body) => {
+    //     //     console.log(body);
+    //     // });
+    //     // fetch('/api/userRightsAdd', {
+    //     //   method: 'POST',
+    //     //   headers: {
+    //     //     'Content-Type': 'application/json'
+    //     //     // 'Content-Type': 'application/x-www-form-urlencoded',
+    //     //   },
+    //     //   body: JSON.stringify({"user_id": "1", "document_id": "1"})
+    //     // })
+    //     // fetch('/api/documents', {
+    //     //   method: 'POST',
+    //     //   headers: {
+    //     //     'Content-Type': 'application/json'
+    //     //     // 'Content-Type': 'application/x-www-form-urlencoded',
+    //     //   },
+    //     //   body: JSON.stringify({"document_path" : "thepath", "document_name": "thename", "document_status": "Signed", "owner_user_id" : 1})
+    //     // })
+    //     // .then((response) => response.text())
+    //     // .then((body) => {
+    //     //     console.log(body);
+    //     // });
+    //     fetch('/api/userAccessibleDocuments/1')
+    //     .then((response) => response.text())
+    //     .then((body) => {
+    //         console.log(body);
+    //     });
+
+    //     console.log("test fetch");
+    //   }, []
+    // );
 
     return (
           <Card title="Upload a new file" align='left'>
