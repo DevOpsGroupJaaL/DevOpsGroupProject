@@ -1,34 +1,17 @@
 import "./App.css";
 import "antd/dist/reset.css";
-import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, Button } from "antd";
 import GlobalHeader from "./global-header.js";
 import Dashboard from "./dashboard.js";
 import { StepsComponent, StepsFooter } from "./steps.js";
 import UploadComponent from "./addFile1.js";
 import MyDocument from "./addFile2.js";
-import Review from "./addFile3.js";
 import CertModal from './certificationPasswordModal.js';
-import './App.css';
-import 'antd/dist/reset.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Layout, Button } from 'antd';
-import GlobalHeader from './global-header.js';
-import Dashboard from './dashboard.js';
-import {StepsComponent, StepsFooter }from './steps.js';
 import React, { useState, useEffect } from 'react';
-import {
-  CognitoUserPool,
-  CognitoUser,
-  AuthenticationDetails,
-} from 'amazon-cognito-identity-js';
-import {CognitoIdentityServiceProvider} from 'aws-sdk';
-
-import { getToken, logout } from './auth.js';
+import { getToken, logout, getCurrentUser } from './auth.js';
 
 const { Content, Footer } = Layout;
-const cognito = new CognitoIdentityServiceProvider({region: 'eu-central-1'});
 
 const App = () => {
   const [currentFooter, setCurrentFooter] = useState(0);
@@ -39,6 +22,7 @@ const App = () => {
 	const [certModalVisible, setCertModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasToken, setHasToken] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
   const tokenLoaded = false;
 
 	if (certModalVisible) {
@@ -93,8 +77,17 @@ const App = () => {
       getToken(authorizationCode).then(() => {
         setHasToken(true);
         setIsLoggedIn(true);
+        getCurrentUser().then((data) => {
+          console.log(data);
+          setCurrentUser(data)
+        });
       });
-    } 
+    } else if (currentUser == {}) {
+      getCurrentUser().then((data) => {
+        console.log(data);
+        setCurrentUser(data)
+      });
+    }
   }
   }, [hasToken]);
 
@@ -156,5 +149,5 @@ if(hasToken) {
     </BrowserRouter>
   );
 };
-
+}
 export default App;

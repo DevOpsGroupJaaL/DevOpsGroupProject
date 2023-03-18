@@ -1,10 +1,10 @@
 import { GetUserCommand } from "@aws-sdk/client-cognito-identity-provider";
 import { cognitoClient } from './libs/cognitoClient.js'
 
-const GetCurrentUser = () => {
+const GetCurrentUser = (accessToken) => {
     const client = cognitoClient;
 
-    const command = new GetUserCommand({});
+    const command = new GetUserCommand({AccessToken: accessToken});
 
     client.send(command).then(
       (data) => {
@@ -16,4 +16,4 @@ const GetCurrentUser = () => {
     );
 };
 
-export default GetCurrentUser;
+export { GetCurrentUser };

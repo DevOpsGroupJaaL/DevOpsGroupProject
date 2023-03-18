@@ -52,4 +52,16 @@ const logout = async () => {
 
 }
 
-export { getToken, logout };
+const getCurrentUser = async () => {
+    fetch('/api/cognito/currentUser', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accessToken: localStorage.getItem('accessToken') })
+    }).then((res) => {
+        console.log(res);
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
+export { getToken, logout, getCurrentUser };
