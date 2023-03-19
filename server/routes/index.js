@@ -23,4 +23,8 @@ router.post('/documents', dbUsers.postDocuments);
 router.get('/userOwnedDocuments/:userid', dbUsers.getUserOwnedDocuments);
 router.get('/userAccessibleDocuments/:userid', dbUsers.getUserAccessibleDocuments);
 
+
+
+router.get('/userAccessibleDocumentsForOPA', dbUsers.getUserAccessibleDocumentsForOPA);
+
 export default router;

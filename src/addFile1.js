@@ -10,6 +10,7 @@ import {
     Card,
   } from 'antd';
 import React, { useEffect } from 'react';
+import _ from 'lodash'
 
   const { Content } = Layout;
   // const { Step } = Steps;
@@ -36,6 +37,38 @@ import React, { useEffect } from 'react';
     },
   };
 
+  const UploadOpaData = () => {
+    const policyJson = [];
+    fetch('/api/userAccessibleDocumentsForOPA')
+    .then((response) => response.text())
+    .then((body) => {
+      console.log(body);
+    });
+
+    fetch('http://opa-s-Publi-1HAE82P6Z8IX3-1373892038.eu-central-1.elb.amazonaws.com:8181/v1/data/policy_data',
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: policyJson
+      }
+     ).then((response) => response.text())
+      .then((body) => {
+      console.log(JSON.stringify((JSON.parse(body))["res"]));
+        const flatBody = (JSON.parse(body))["res"];
+        const simplifiedBody = _.mapValues(_.groupBy(flatBody, data => data.document_id), clist => clist.map(data => _.omit(data, 'document_id')));
+        // Loop through each key and value pair
+        for (const [key, value] of Object.entries(simplifiedBody)) {
+          // Check if the value is an array
+          if (Array.isArray(value)) {
+              // Convert each object in the array to an integer
+              simplifiedBody[key] = value.map(user => user.user_id);
+          }
+        }
+        console.log(JSON.stringify(simplifiedBody));
+    });
+  }
 
   const UploadComponent = () => {
 
