@@ -1,11 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Select   } from 'antd';
 
 // TODO get users from backend
-const OPTIONS = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
+// useEffect(() => {
+//   fetch("/api/cognito/listUsers")
+//     .then(res => {
+//       OPTIONS = res.body;
+//     }
+//       )
+// }, [])
 
-const Popup = ({isModalOpen, setIsModalOpen}) => {
+// userEvent.Attributes
+// username
 
+
+
+
+const Popup = ({isModalOpen, setIsModalOpen, options}) => {
+  // call getOptions() to get users from backend ONCE
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -13,9 +25,12 @@ const Popup = ({isModalOpen, setIsModalOpen}) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
+  
   const [selectedItems, setSelectedItems] = useState([]);
-  const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o))
+  if (!options) {
+    return null;
+  }
+  const filteredOptions = options.filter((o) => !selectedItems.includes(o))
 
   return (
       <Modal title="Associated users" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>

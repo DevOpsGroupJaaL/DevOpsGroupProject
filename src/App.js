@@ -9,12 +9,12 @@ import UploadComponent from "./addFile1.js";
 import MyDocument from "./addFile2.js";
 import CertModal from "./certificationPasswordModal.js";
 import React, { useState, useEffect } from "react";
-import { setToken, logout, getCurrentUser, redirectLogin } from "./auth.js";
+import { setToken, getCurrentUser, redirectLogin } from "./auth.js";
 
 const { Content, Footer } = Layout;
 
 const App = () => {
-  const [currentFooter, setCurrentFooter] = useState(0);
+	const [currentFooter, setCurrentFooter] = useState(0);
   const [pdfFile, setPdfFile] = useState([]);
   const [pdfName, setPdfName] = useState([]);
   const [nextButton, setNextButton] = useState(false);

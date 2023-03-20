@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Button, Input, Modal, Space } from 'antd';
 import { useEffect } from 'react';
 
+
+
+let randomEmail = () => {
+	return Math.random().toString(36).substring(7) + '@test.com';
+};
+
 // TEMP TO BE REPLACED WITH CURRENT USER DATA
 const USERNAME = "mifsud"
 const NAME = "Aleandro Mifsud"
@@ -28,6 +34,21 @@ const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 	};
 
 	const handleOk = () => {
+		let email = randomEmail();
+		console.log('creating user for ' + email);
+		// TODO: get current user's email via cognito
+
+		fetch('/api/users', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({'email': email}),
+		})
+			.then((response) => console.log(response));
+		// setIsModalOpen(false);
+
+
 		fetch("/api/dss/certificate", {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},

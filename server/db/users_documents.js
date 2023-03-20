@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
+import pool from '../db/index.js';
 dotenv.config(); //module loading environment variables from .env file
 
-import pool from '../db/index.js';
 
 // returning all records from userlist
 const getUsers = (request, response) => { //assigning anonymous function to constant
@@ -20,6 +20,23 @@ const getUsers = (request, response) => { //assigning anonymous function to cons
     response.json({ message });
   });
 }
+
+const getUserIdByEmail = (request, response) => {
+  const email = request.params.email; // assuming the email is passed as a URL parameter
+  pool.query('SELECT user_id FROM users WHERE user_email = ?', [email])
+    .then(results => {
+      const userId = results[0][0];
+      response.set('Content-Type', 'application/json');
+      response.status(200).json( userId );
+    })
+    .catch(error => {
+      var message = error.message;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+}
+
 
 const getUserAccessibleDocuments = (request, response) => { //assigning anonymous function to constant
   const userid = request.params.userid;
@@ -60,7 +77,6 @@ const getUserOwnedDocuments = (request, response) => { //assigning anonymous fun
 
 const postUsers = (request, response) => { //assigning anonymous function to constant
   const obj = request.body;  // variable obj is initialised as the JSON body of the POST request
-
   pool.query('INSERT INTO users (user_email) VALUES (?)', [obj.email])
   .then(results => {
     // handle the results
@@ -151,4 +167,4 @@ const postUserRightsDelete = (request, response) => { //assigning anonymous func
 // }
 
 
-export default { getUsers, postUsers, postUserRightsAdd, postUserRightsDelete, postDocuments, getUserOwnedDocuments, getUserAccessibleDocuments};
+export default { getUsers, postUsers,getUserIdByEmail, postUserRightsAdd, postUserRightsDelete, postDocuments, getUserOwnedDocuments, getUserAccessibleDocuments};
