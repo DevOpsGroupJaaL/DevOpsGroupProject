@@ -8,13 +8,12 @@ import Dashboard from "./dashboard.js";
 import { StepsComponent, StepsFooter } from "./steps.js";
 import UploadComponent from "./addFile1.js";
 import MyDocument from "./addFile2.js";
-import Review from "./addFile3.js";
 import CertModal from './certificationPasswordModal.js';
 
 const { Content, Footer } = Layout;
 
 const App = () => {
-  const [currentFooter, setCurrentFooter] = useState(0);
+	const [currentFooter, setCurrentFooter] = useState(0);
   const [pdfFile, setPdfFile] = useState([]);
   const [pdfName, setPdfName] = useState([]);
   const [nextButton, setNextButton] = useState(false);
@@ -23,6 +22,7 @@ const App = () => {
 
 	if (certModalVisible) {
 		// TODO: replace with logic checking for logged in user
+		// setCertModalVisible(true);
 		setCertModalVisible(false);
 	}
   const steps = [
