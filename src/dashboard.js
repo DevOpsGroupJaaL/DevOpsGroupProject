@@ -10,7 +10,7 @@ const items = [
   },
   {
     key: '2',
-    label: `Assorted Files`,
+    label: `Associated Files`,
     children: <DashboardAssociatedFiles/>,
   },
 ];
