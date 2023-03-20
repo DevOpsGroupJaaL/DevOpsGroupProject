@@ -12,6 +12,7 @@ import multer from 'multer';
 import { createCertificate } from '../dss/create_cert.js';
 import { signDocument } from '../dss/sign_doc.js';
 
+import opaRequests from '../db/opa_requests.js';
 
 const router = express.Router();
 
@@ -77,5 +78,11 @@ router.post('/userRightsAddMany', dbUsers.postUserRightsAddMany);
 router.post('/documents', dbUsers.postDocuments);
 router.get('/userOwnedDocuments/:userid', dbUsers.getUserOwnedDocuments);
 router.get('/userAccessibleDocuments/:userid', dbUsers.getUserAccessibleDocuments);
+
+
+
+router.get('/userAccessibleDocumentsForOPA', dbUsers.getUserAccessibleDocumentsForOPA);
+router.post('/updateOpaPolicy', opaRequests.UploadOpaDataBackend);
+router.post('/retrieveOpaAccess', opaRequests.RetrieveOpaDataBackend);
 
 export default router;
