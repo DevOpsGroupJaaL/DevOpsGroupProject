@@ -8,6 +8,9 @@ let randomEmail = () => {
 	return Math.random().toString(36).substring(7) + '@test.com';
 };
 
+// TEMP TO BE REPLACED WITH CURRENT USER DATA
+const USERNAME = "mifsud"
+const NAME = "Aleandro Mifsud"
 
 const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 	const [password, setPassword] = useState('');
@@ -43,7 +46,24 @@ const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 			body: JSON.stringify({'email': email}),
 		})
 			.then((response) => console.log(response));
-		setIsModalOpen(false);
+		// setIsModalOpen(false);
+
+
+		fetch("/api/dss/certificate", {
+			method: 'POST',
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				'full_name': NAME,
+				'password': password,
+				'username': USERNAME
+			})
+		  }).then((response) => {
+			  const status = response.status
+
+			  if(status == 201) {
+				setIsModalOpen(false);
+			  }
+		  });
 	};
 
 	return (

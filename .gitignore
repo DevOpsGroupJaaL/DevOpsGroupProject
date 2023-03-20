@@ -30,3 +30,5 @@ node_modules/
 yarn.lock
 server/package-lock.json
 server/package.json
+signsealwebapp/package-lock.json
+package-lock.json

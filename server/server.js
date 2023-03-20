@@ -9,7 +9,6 @@ import cors from 'cors'
 
 import path from 'path';
 
-
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pathVal = __dirname + '/views/';
 
