@@ -3,8 +3,8 @@ import { cognitoClient } from './libs/cognitoClient.js'
 
 const GetCurrentUser = (accessToken) => {
     const client = cognitoClient;
-
-    const command = new GetUserCommand({AccessToken: accessToken});
+    console.log(accessToken)
+    const command = new GetUserCommand(accessToken);
 
     client.send(command).then(
       (data) => {

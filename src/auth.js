@@ -1,4 +1,3 @@
-import axios from "axios";
 const getToken = async (authorizationCode) => {
     console.log(authorizationCode);
     const token = {}
@@ -14,13 +13,12 @@ const getToken = async (authorizationCode) => {
 
     console.log(formBody);
 
-    await axios.post(
-        'https://signseal.auth.eu-central-1.amazoncognito.com/oauth2/token',
-        formBody,
-        {
+    fetch('https://signseal.auth.eu-central-1.amazoncognito.com/oauth2/token', {
+        method: 'POST',
+        body: formBody,
         headers:{
             'Content-Type': 'application/x-www-form-urlencoded'
-            
+
         }
     }).then((res)=>{
         token.access_token = res.data.access_token;
@@ -48,7 +46,7 @@ const logout = async () => {
     const formBody = Object.keys(details).map(key=>`${encodeURIComponent(key)}=${encodeURIComponent(details[key])}`).join("&");
 
     const authEndpoint = `https://signseal.auth.eu-central-1.amazoncognito.com/logout?${formBody}`;
-    await axios.get(authEndpoint, {headers: {'Access-Control-Allow-Origin': '*' }})
+    fetch(authEndpoint, {headers: {'Access-Control-Allow-Origin': '*' }})
 
 }
 
@@ -59,6 +57,7 @@ const getCurrentUser = async () => {
         body: JSON.stringify({ accessToken: localStorage.getItem('accessToken') })
     }).then((res) => {
         console.log(res);
+        return res.body
     }).catch((err) => {
         console.log(err);
     });

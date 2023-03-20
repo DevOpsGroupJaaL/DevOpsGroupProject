@@ -66,9 +66,12 @@ const App = () => {
     if(localStorage.getItem('accessToken') && localStorage.getItem('idToken')) {
       setHasToken(true);
       setIsLoggedIn(true);
+
+      getCurrentUser().then((data) => {
+        setCurrentUser(data)
+      });
     } else {
     if (!isLoggedIn && !authorizationCode) {
-      console.log({isLoggedIn});
       handleLogin();
       // setIsLoggedIn(true);
       // setHasToken(true);
@@ -78,13 +81,11 @@ const App = () => {
         setHasToken(true);
         setIsLoggedIn(true);
         getCurrentUser().then((data) => {
-          console.log(data);
           setCurrentUser(data)
         });
       });
     } else if (currentUser == {}) {
       getCurrentUser().then((data) => {
-        console.log(data);
         setCurrentUser(data)
       });
     }
@@ -130,7 +131,7 @@ if(hasToken) {
             </Routes>
             <Button onClick={logout}>Logout</Button>
             <div>
-              {console.log({})}
+              {/* {console.log({})} */}
             </div>
           </Content>
 

@@ -47,9 +47,9 @@ router.post('/s3/putObject',multer().any() ,  function (req, res, next)
   });
 router.get('/cognito/listUsers', listUsers);
 router.put('/cognito/logOut', logOut);
-router.get('/cognito/currentUser', function (req, res) {
+router.post('/cognito/currentUser', function (req, res) {
   console.log("TEST")
-  GetCurrentUser(req.body.access_token).then((data) => {
+  GetCurrentUser(req.body.accessToken).then((data) => {
     console.log(data)
     res.status(200);
     res.json({body: data});
