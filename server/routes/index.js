@@ -6,8 +6,8 @@ import dbUsers from '../db/users_documents.js';
 import getS3Object from "../aws/s3_getobject.js"
 import putS3Object from "../aws/s3_putobject.js"
 import listUsers from "../aws/cognito_listusers.js"
-import logOut from "../aws/cognito_logOut.js"
-import currentUser from "../aws/cognito_currentUser.js"
+import { logout } from "../aws/cognito_logOut.js"
+import { GetCurrentUser } from "../aws/cognito_currentUser.js"
 import multer from 'multer';
 import { createCertificate } from '../dss/create_cert.js';
 import { signDocument } from '../dss/sign_doc.js';
@@ -47,8 +47,20 @@ router.post('/s3/putObject',multer().any() ,  function (req, res, next)
     })
   });
 router.get('/cognito/listUsers', listUsers);
-router.put('/cognito/logOut', logOut);
-router.get('/cognito/currentUser', currentUser);
+router.post('/cognito/logOut', function (req, res) {
+  logout(req.body.accessToken).then(() => {
+    res.status(200);
+    res.json(JSON.stringify({status: "ok"}));
+    res.end();
+  })
+});
+router.post('/cognito/currentUser', function (req, res) {
+  GetCurrentUser(req.body.accessToken).then((userDetails) => {
+    res.status(200);
+    res.json(JSON.stringify(userDetails));
+    res.end();
+  })
+});
 router.post('/dss/sign', function (req, res) {
   const payload = req.body
   signDocument(payload.document_dir, payload.username, payload.name, payload.certificate_pass).then(status => {

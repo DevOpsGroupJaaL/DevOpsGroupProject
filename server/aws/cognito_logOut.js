@@ -2,20 +2,23 @@ import {  GlobalSignOutCommand } from "@aws-sdk/client-cognito-identity-provider
 import { cognitoClient } from './libs/cognitoClient.js';
 
 
-const handleLogout = () => {
+const logout = (accessToken) => {
+    console.log(accessToken)
     const client = cognitoClient
-    const command = new GlobalSignOutCommand({});
+    const params = {
+        AccessToken: accessToken
+      };
 
-    client.send(command).then(
-        (data) => {
-        console.log(data);
-        // clear user session and redirect to login page
-        },
-        (error) => {
+    const command = new GlobalSignOutCommand(params);
+
+    client.send(command).then((data) => {
+        return data
+    },
+    (error) => {
         console.log(error);
-        }
+    }
     );
 };
 
 
-export default handleLogout;
+export { logout };
