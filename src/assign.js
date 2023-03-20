@@ -25,8 +25,11 @@ const Popup = ({isModalOpen, setIsModalOpen, options}) => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
+  
   const [selectedItems, setSelectedItems] = useState([]);
+  if (!options) {
+    return null;
+  }
   const filteredOptions = options.filter((o) => !selectedItems.includes(o))
 
   return (

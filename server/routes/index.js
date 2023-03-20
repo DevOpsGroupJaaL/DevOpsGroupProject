@@ -67,6 +67,7 @@ router.post('/dss/certificate', function (req, res) {
     res.end();
   });
 })
+router.get('/users', dbUsers.getUsers);
 router.post('/users', dbUsers.postUsers);
 router.get('/users/:email', dbUsers.getUserIdByEmail);
 router.post('/userRightsDelete', dbUsers.postUserRightsDelete);

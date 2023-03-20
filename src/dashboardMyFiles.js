@@ -70,7 +70,7 @@ const DashboardMyFiles = () => {
             list.map((tag) => {
               return (
                 <Tag color={"green"} key={tag}>
-                  {tag.toUpperCase()}
+                  {tag}
                 </Tag>
               );
             })
