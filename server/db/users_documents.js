@@ -258,4 +258,4 @@ export default {
   getUserAccessibleDocuments,
   postUserRightsAddMany,
   postUserRightsWipe,
-, getUserAccessibleDocumentsForOPA};
+  getUserAccessibleDocumentsForOPA};
