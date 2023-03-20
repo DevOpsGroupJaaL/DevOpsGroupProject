@@ -56,6 +56,23 @@ const getUserAccessibleDocuments = (request, response) => { //assigning anonymou
   });
 }
 
+const getUserAccessibleDocumentsForOPA = (request, response) => { //assigning anonymous function to constant
+  pool.query('SELECT d.document_id, udr.user_id FROM user_document_rights AS udr INNER JOIN documents AS d ON (udr.document_id = d.document_id) ORDER BY d.document_id')
+  .then(results => {
+    // handle the results
+    const res = results[0]
+    response.set('Content-Type', 'application/json');
+    response.status(200).json({ res });
+  })
+  .catch(error => {
+    // handle the error
+    var message = `Error!`;
+    console.error(error);
+    response.status(400);
+    response.json({ message });
+  });
+}
+
 const getUserOwnedDocuments = (request, response) => { //assigning anonymous function to constant
   const userid = request.params.userid;
 
@@ -167,4 +184,4 @@ const postUserRightsDelete = (request, response) => { //assigning anonymous func
 // }
 
 
-export default { getUsers, postUsers,getUserIdByEmail, postUserRightsAdd, postUserRightsDelete, postDocuments, getUserOwnedDocuments, getUserAccessibleDocuments};
+export default { getUsers, postUsers,getUserIdByEmail, postUserRightsAdd, postUserRightsDelete, postDocuments, getUserOwnedDocuments, getUserAccessibleDocuments, getUserAccessibleDocumentsForOPA};
