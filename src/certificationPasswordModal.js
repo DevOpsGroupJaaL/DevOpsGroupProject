@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { Button, Input, Modal, Space } from 'antd';
 import { useEffect } from 'react';
 
+
+
+let randomEmail = () => {
+	return Math.random().toString(36).substring(7) + '@test.com';
+};
+
+
 const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -24,20 +31,16 @@ const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 	};
 
 	const handleOk = () => {
-		// TODO send the pw to where ever
-		console.log('send pw');
+		let email = randomEmail();
+		console.log('creating user for ' + email);
+		// TODO: get current user's email via cognito
 
-		// fetch('/api/users')
-        // .then((response) => response.text())
-        // .then((body) => {
-        //   console.log(body);
-        // });
 		fetch('/api/users', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({'email': 'newtest'}),
+			body: JSON.stringify({'email': email}),
 		})
 			.then((response) => console.log(response));
 		setIsModalOpen(false);

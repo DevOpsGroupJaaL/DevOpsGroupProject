@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, Select   } from 'antd';
 
 // TODO get users from backend
@@ -13,10 +13,11 @@ import { Button, Modal, Select   } from 'antd';
 // userEvent.Attributes
 // username
 
-let OPTIONS = ['Apples', 'Nails', 'Bananas', 'Helicopters'];
 
-const Popup = ({isModalOpen, setIsModalOpen}) => {
 
+
+const Popup = ({isModalOpen, setIsModalOpen, options}) => {
+  // call getOptions() to get users from backend ONCE
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -26,7 +27,7 @@ const Popup = ({isModalOpen, setIsModalOpen}) => {
   };
 
   const [selectedItems, setSelectedItems] = useState([]);
-  const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o))
+  const filteredOptions = options.filter((o) => !selectedItems.includes(o))
 
   return (
       <Modal title="Associated users" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
