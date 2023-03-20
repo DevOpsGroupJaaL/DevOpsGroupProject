@@ -6,7 +6,7 @@ import dbUsers from '../db/users_documents.js';
 import getS3Object from "../aws/s3_getobject.js"
 import putS3Object from "../aws/s3_putobject.js"
 import listUsers from "../aws/cognito_listusers.js"
-import logOut from "../aws/cognito_logOut.js"
+import { logout } from "../aws/cognito_logOut.js"
 import { GetCurrentUser } from "../aws/cognito_currentUser.js"
 import multer from 'multer';
 import { createCertificate } from '../dss/create_cert.js';
@@ -46,13 +46,17 @@ router.post('/s3/putObject',multer().any() ,  function (req, res, next)
     })
   });
 router.get('/cognito/listUsers', listUsers);
-router.put('/cognito/logOut', logOut);
-router.post('/cognito/currentUser', function (req, res) {
-  console.log("TEST")
-  GetCurrentUser(req.body.accessToken).then((data) => {
-    console.log(data)
+router.post('/cognito/logOut', function (req, res) {
+  logout(req.body.accessToken).then(() => {
     res.status(200);
-    res.json({body: data});
+    res.json(JSON.stringify({status: "ok"}));
+    res.end();
+  })
+});
+router.post('/cognito/currentUser', function (req, res) {
+  GetCurrentUser(req.body.accessToken).then((userDetails) => {
+    res.status(200);
+    res.json(JSON.stringify(userDetails));
     res.end();
   })
 });

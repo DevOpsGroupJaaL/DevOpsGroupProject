@@ -3,12 +3,18 @@ import { cognitoClient } from './libs/cognitoClient.js'
 
 const GetCurrentUser = (accessToken) => {
     const client = cognitoClient;
-    console.log(accessToken)
-    const command = new GetUserCommand(accessToken);
+    const params = {
+      AccessToken: accessToken
+    };
+    const command = new GetUserCommand(params);
 
-    client.send(command).then(
+    return client.send(command).then(
       (data) => {
-        return data.UserAttributes;
+        return {
+          username: data.Username,
+          name: data.UserAttributes.filter(x => x.Name == 'name')[0].Value,
+          email: data.UserAttributes.filter(x => x.Name == 'email')[0].Value
+        };
     },
       (error) => {
         console.log(error);

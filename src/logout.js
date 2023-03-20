@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'antd';
+import { logout } from './auth.js';
 
 const Logout = () => {
   return (
     <Button
-    //   onClick={() => logout({ returnTo: window.location.origin })}
+      onClick={() => logout()}
       style={{
         position: 'absolute',
         right: 0,
@@ -14,7 +15,7 @@ const Logout = () => {
         fontSize: '16px',
       }}
     >
-      TODO Change to Logout Icon
+      Logout
     </Button>
   );
 }
