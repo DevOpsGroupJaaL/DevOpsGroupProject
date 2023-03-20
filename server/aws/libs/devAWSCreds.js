@@ -1,7 +1,6 @@
 const CREDS = {
-    accessKeyId: "ASIA3LKH3GFGAPS4WTBH",
-    secretAccessKey: "LZRFNxj6BZsJt+w5oRULWfNE5ynhPB1mFad2J1Ho",
-    sessionToken: "IQoJb3JpZ2luX2VjELP//////////wEaDGV1LWNlbnRyYWwtMSJHMEUCIQCdmIABSbKvxYqWlmuMeNCO2qfAaxD8MRwnQ/XOXl48yQIgMJ8En6rq09Ms+gtib/84AdsXUVq/o2IBevVIItEaU6kq9wIIfBAAGgw3ODAyMjQxMTUwMjAiDDkd9kO8SbdTTzJqpyrUArvqxqc8kQaTBWLBvgxk+ZXOm9WvHshTV06wH5+iY7Dzt8BO3216KmKZtXffKqiy2fwGXvLDKCVYcVfUpaAdLevyZNWqwcSNJetXI45Ell3ASryO+RKaO0tcrNnoIkgVCd7xra9PJlQtBOG29+qr2aEmhjlFb0Uee3kOnKoX0HhJRer8pxrkWm16m1inmEtLjzfm+gQIo4QJ+GCxIAYeNyS0TZ5s2il2XNQ7wmf2ot4YPK4J8CtDutXMsGehJf4IjtfCdT9vvHnH1+CM42cIc4dMpPtuiIXuJVf3Ye5qP8ypQjsUiAmrI+5GuWuGB+jV4ujVwtmoS9hcnYmwGM/0ZlSTVUUIMIASxgmeW89GgBPZ9v0SHvT4GpTEBMlIHB2slV2mp4b/K+xo7u1r+K/WqElaab9cFaSBt43DV6F0KMGOlDpsFJPXBJlMGrYRMxwV7gqlgJwwlMvioAY6pwGxdq4HXIIsZ1YNsRhc+sbxmlAl1MjiXhmm38XCSKncrURFccGK3LbC+nuoPtWfsBUC1SI5LIgm7ACGKg/zdEySaLpuG5xF4xrADqMd6MobsyhhqPP1Ywy5g3/qQQTmjLv6OPBxydWF7toyxu9gAn0OmwA1z0Vlh0dlqV1+aXtAyiiNiynV8cx2z/3rVmRl+yCna+klIEwYzqwgEbkFyOYUjoY3ffOYlQ=="
-}
+    accessKeyId: "XXXXX",
+    secretAccessKey: "XXXXXXX",
+    sessionToken: "XXXXXXXX"
 
 export { CREDS }
