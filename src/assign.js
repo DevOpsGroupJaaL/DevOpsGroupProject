@@ -1,25 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Select   } from 'antd';
 
-// TODO get users from backend
-// useEffect(() => {
-//   fetch("/api/cognito/listUsers")
-//     .then(res => {
-//       OPTIONS = res.body;
-//     }
-//       )
-// }, [])
 
-// userEvent.Attributes
-// username
+const Popup = ({isModalOpen, setIsModalOpen, options, record}) => {
+  console.log(record)
 
-
-
-
-const Popup = ({isModalOpen, setIsModalOpen, options}) => {
-  // call getOptions() to get users from backend ONCE
   const handleOk = () => {
+    console.log(selectedItems)
+    console.log(record)
+    fetch('/api/userRightsWipe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        document_id: record.document_id,
+      }),
+    })
+
+    // send the selected items to api/userRightsAddMany with the document_id from record
+    fetch('/api/userRightsAddMany', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        document_id: record.document_id,
+        user_ids: selectedItems
+      }),
+    })
+    .then((response) => response.text())
+    .then((body) => {
+      const parsedBody = JSON.parse(body);
+      console.log(parsedBody)
+    });
+    // then close the modal
     setIsModalOpen(false);
+    // then refresh the table
+
   };
 
   const handleCancel = () => {
@@ -27,6 +45,8 @@ const Popup = ({isModalOpen, setIsModalOpen, options}) => {
   };
   
   const [selectedItems, setSelectedItems] = useState([]);
+
+
   if (!options) {
     return null;
   }
@@ -43,8 +63,9 @@ const Popup = ({isModalOpen, setIsModalOpen, options}) => {
                     width: '100%',
                 }}
                 options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
+                  // show only the user_email in the dropdown but send the whole object to the backend
+                  label: item.user_email,
+                  value: item.user_id
                 }))}
                 />
       </Modal>
