@@ -85,6 +85,8 @@ router.post('/users', dbUsers.postUsers);
 router.get('/users/:email', dbUsers.getUserIdByEmail);
 router.post('/userRightsDelete', dbUsers.postUserRightsDelete);
 router.post('/userRightsAdd', dbUsers.postUserRightsAdd);
+router.post('/userRightsWipe', dbUsers.postUserRightsWipe);
+router.post('/userRightsAddMany', dbUsers.postUserRightsAddMany);
 router.post('/documents', dbUsers.postDocuments);
 router.get('/userOwnedDocuments/:userid', dbUsers.getUserOwnedDocuments);
 router.get('/userAccessibleDocuments/:userid', dbUsers.getUserAccessibleDocuments);

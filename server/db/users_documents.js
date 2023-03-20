@@ -1,60 +1,66 @@
-import dotenv from 'dotenv'
-import pool from '../db/index.js';
+import dotenv from "dotenv";
+import pool from "../db/index.js";
 dotenv.config(); //module loading environment variables from .env file
 
-
 // returning all records from userlist
-const getUsers = (request, response) => { //assigning anonymous function to constant
-  pool.query('SELECT * FROM users')
-  .then(results => {
-    // handle the results
-    const res = results[0]
-    response.set('Content-Type', 'application/json');
-    response.status(200).json({ res });
-  })
-  .catch(error => {
-    // handle the error
-    var message = `Error!`;
-    console.error(error);
-    response.status(400);
-    response.json({ message });
-  });
-}
+const getUsers = (request, response) => {
+  //assigning anonymous function to constant
+  pool
+    .query("SELECT * FROM users")
+    .then((results) => {
+      // handle the results
+      const res = results[0];
+      response.set("Content-Type", "application/json");
+      response.status(200).json({ res });
+    })
+    .catch((error) => {
+      // handle the error
+      var message = `Error!`;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+};
 
 const getUserIdByEmail = (request, response) => {
   const email = request.params.email; // assuming the email is passed as a URL parameter
-  pool.query('SELECT user_id FROM users WHERE user_email = ?', [email])
-    .then(results => {
+  pool
+    .query("SELECT user_id FROM users WHERE user_email = ?", [email])
+    .then((results) => {
       const userId = results[0][0];
-      response.set('Content-Type', 'application/json');
-      response.status(200).json( userId );
+      response.set("Content-Type", "application/json");
+      response.status(200).json(userId);
     })
-    .catch(error => {
+    .catch((error) => {
       var message = error.message;
       console.error(error);
       response.status(400);
       response.json({ message });
     });
-}
+};
 
-
-const getUserAccessibleDocuments = (request, response) => { //assigning anonymous function to constant
+const getUserAccessibleDocuments = (request, response) => {
+  //assigning anonymous function to constant
   const userid = request.params.userid;
-  pool.query('SELECT udr.user_id, d.* FROM user_document_rights AS udr INNER JOIN documents AS d ON (udr.document_id = d.document_id) WHERE udr.user_id = ?', [userid])
-  .then(results => {
-    // handle the results
-    const res = results[0]
-    response.set('Content-Type', 'application/json');
-    response.status(200).json({ res });
-  })
-  .catch(error => {
-    // handle the error
-    var message = `Error!`;
-    console.error(error);
-    response.status(400);
-    response.json({ message });
-  });
-}
+  pool
+    .query(
+      "SELECT udr.user_id, d.* FROM user_document_rights AS udr INNER JOIN documents AS d ON (udr.document_id = d.document_id) WHERE udr.user_id = ?",
+      [userid]
+    )
+    .then((results) => {
+      // handle the results
+      const res = results[0];
+      response.set("Content-Type", "application/json");
+      response.status(200).json({ res });
+    })
+    .catch((error) => {
+      // handle the error
+      var message = `Error!`;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+};
 
 const getUserAccessibleDocumentsForOPA = (request, response) => { //assigning anonymous function to constant
   pool.query('SELECT d.document_id, udr.user_id FROM user_document_rights AS udr INNER JOIN documents AS d ON (udr.document_id = d.document_id) ORDER BY d.document_id')
@@ -73,101 +79,159 @@ const getUserAccessibleDocumentsForOPA = (request, response) => { //assigning an
   });
 }
 
-const getUserOwnedDocuments = (request, response) => { //assigning anonymous function to constant
+const getUserOwnedDocuments = (request, response) => {
+  //assigning anonymous function to constant
   const userid = request.params.userid;
 
-  pool.query('SELECT * FROM documents WHERE (owner_user_id = ?)', [userid])
-  .then(results => {
-    // handle the results
-    const res = results[0]
-    response.set('Content-Type', 'application/json');
-    response.status(200).json({ res });
-  })
-  .catch(error => {
-    // handle the error
-    var message = `Error!`;
-    console.error(error);
-    response.status(400);
-    response.json({ message });
-  });
-}
+  pool
+    .query("SELECT * FROM documents WHERE (owner_user_id = ?)", [userid])
+    .then((results) => {
+      // handle the results
+      const res = results[0];
+      response.set("Content-Type", "application/json");
+      response.status(200).json({ res });
+    })
+    .catch((error) => {
+      // handle the error
+      var message = `Error!`;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+};
 
-const postUsers = (request, response) => { //assigning anonymous function to constant
-  const obj = request.body;  // variable obj is initialised as the JSON body of the POST request
-  pool.query('INSERT INTO users (user_email) VALUES (?)', [obj.email])
-  .then(results => {
-    // handle the results
-    const res = results[0]
-    response.set('Content-Type', 'application/json');
-    response.status(200).json({ res });
-  })
-  .catch(error => {
-    // handle the error
-    var message = `Error!`;
-    console.error(error);
-    response.status(400);
-    response.json({ message });
-  });
-}
+const postUsers = (request, response) => {
+  //assigning anonymous function to constant
+  const obj = request.body; // variable obj is initialised as the JSON body of the POST request
+  pool
+    .query("INSERT INTO users (user_email) VALUES (?)", [obj.email])
+    .then((results) => {
+      // handle the results
+      const res = results[0];
+      response.set("Content-Type", "application/json");
+      response.status(200).json({ res });
+    })
+    .catch((error) => {
+      // handle the error
+      var message = `Error!`;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+};
 
-const postDocuments = (request, response) => { //assigning anonymous function to constant
-  const obj = request.body;  // variable obj is initialised as the JSON body of the POST request
+const postDocuments = (request, response) => {
+  //assigning anonymous function to constant
+  const obj = request.body; // variable obj is initialised as the JSON body of the POST request
 
-  pool.query('INSERT INTO documents (document_path, document_name, document_status, owner_user_id) VALUES (?, ?, ?, ?)',
-  [obj.document_path, obj.document_name, obj.document_status, obj.owner_user_id])
-  .then(results => {
-    // handle the results
-    const res = results[0]
-    response.set('Content-Type', 'application/json');
-    response.status(200).json({ res });
-  })
-  .catch(error => {
-    // handle the error
-    var message = `Error!`;
-    console.error(error);
-    response.status(400);
-    response.json({ message });
-  });
-}
+  pool
+    .query(
+      "INSERT INTO documents (document_path, document_name, document_status, owner_user_id) VALUES (?, ?, ?, ?)",
+      [
+        obj.document_path,
+        obj.document_name,
+        obj.document_status,
+        obj.owner_user_id,
+      ]
+    )
+    .then((results) => {
+      // handle the results
+      const res = results[0];
+      response.set("Content-Type", "application/json");
+      response.status(200).json({ res });
+    })
+    .catch((error) => {
+      // handle the error
+      var message = `Error!`;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+};
 
-const postUserRightsAdd = (request, response) => { //assigning anonymous function to constant
-  const obj = request.body;  // variable obj is initialised as the JSON body of the POST request
+const postUserRightsAdd = (request, response) => {
+  //assigning anonymous function to constant
+  const obj = request.body; // variable obj is initialised as the JSON body of the POST request
 
-  pool.query('INSERT INTO user_document_rights (user_id, document_id) VALUES (?, ?)', [obj.user_id, obj.document_id])
-  .then(results => {
-    // handle the results
-    const res = results[0]
-    response.set('Content-Type', 'application/json');
-    response.status(200).json({ res });
-  })
-  .catch(error => {
-    // handle the error
-    var message = `Error!`;
-    console.error(error);
-    response.status(400);
-    response.json({ message });
-  });
-}
+  pool
+    .query(
+      "INSERT INTO user_document_rights (user_id, document_id) VALUES (?, ?)",
+      [obj.user_id, obj.document_id]
+    )
+    .then((results) => {
+      // handle the results
+      const res = results[0];
+      response.set("Content-Type", "application/json");
+      response.status(200).json({ res });
+    })
+    .catch((error) => {
+      // handle the error
+      var message = `Error!`;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+};
 
-const postUserRightsDelete = (request, response) => { //assigning anonymous function to constant
-  const obj = request.body;  // variable obj is initialised as the JSON body of the POST request
+const postUserRightsDelete = (request, response) => {
+  //assigning anonymous function to constant
+  const obj = request.body; // variable obj is initialised as the JSON body of the POST request
 
-  pool.query('DELETE FROM user_document_rights WHERE (user_id = ?) & (document_id = ?)', [obj.user_id, obj.document_id])
-  .then(results => {
-    // handle the results
-    const res = results[0]
-    response.set('Content-Type', 'application/json');
-    response.status(200).json({ res });
-  })
-  .catch(error => {
-    // handle the error
-    var message = `Error!`;
-    console.error(error);
-    response.status(400);
-    response.json({ message });
-  });
-}
+  pool
+    .query(
+      "DELETE FROM user_document_rights WHERE (user_id = ?) & (document_id = ?)",
+      [obj.user_id, obj.document_id]
+    )
+    .then((results) => {
+      // handle the results
+      const res = results[0];
+      response.set("Content-Type", "application/json");
+      response.status(200).json({ res });
+    })
+    .catch((error) => {
+      // handle the error
+      var message = `Error!`;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+};
 
+const postUserRightsAddMany = (request, response) => {
+  //assigning anonymous function to constant
+  const document_id = request.body.document_id;
+  const user_ids = request.body.user_ids;
+
+  for (let i = 0; i < user_ids.length; i++) {
+    pool.query(
+      "INSERT INTO user_document_rights (user_id, document_id) VALUES (?, ?)",
+      [user_ids[i], document_id]
+    );
+  }
+};
+
+const postUserRightsWipe = (request, response) => {
+  //assigning anonymous function to constant
+  // removes all user rights for a document
+  const document_id = request.body.document_id;
+  pool
+    .query("DELETE FROM user_document_rights WHERE (document_id = ?)", [
+      document_id,
+    ])
+    .then((results) => {
+      // handle the results
+      const res = results[0];
+      response.set("Content-Type", "application/json");
+      response.status(200).json({ res });
+    })
+    .catch((error) => {
+      // handle the error
+      var message = `Error!`;
+      console.error(error);
+      response.status(400);
+      response.json({ message });
+    });
+};
 
 //   pool.query('SELECT * FROM users', (err, results))=> {
 //   if (err) {
@@ -183,5 +247,15 @@ const postUserRightsDelete = (request, response) => { //assigning anonymous func
 //   response.status(200).json({ success,output });
 // }
 
-
-export default { getUsers, postUsers,getUserIdByEmail, postUserRightsAdd, postUserRightsDelete, postDocuments, getUserOwnedDocuments, getUserAccessibleDocuments, getUserAccessibleDocumentsForOPA};
+export default {
+  getUsers,
+  postUsers,
+  getUserIdByEmail,
+  postUserRightsAdd,
+  postUserRightsDelete,
+  postDocuments,
+  getUserOwnedDocuments,
+  getUserAccessibleDocuments,
+  postUserRightsAddMany,
+  postUserRightsWipe,
+  getUserAccessibleDocumentsForOPA};
