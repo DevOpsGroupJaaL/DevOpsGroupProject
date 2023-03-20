@@ -4,7 +4,7 @@ import { Button, Modal, Select   } from 'antd';
 
 const Popup = ({isModalOpen, setIsModalOpen, options, record}) => {
   console.log(record)
-
+  
   const handleOk = () => {
     console.log(selectedItems)
     console.log(record)
@@ -36,9 +36,7 @@ const Popup = ({isModalOpen, setIsModalOpen, options, record}) => {
     });
     // then close the modal
     setIsModalOpen(false);
-    // then refresh the table
-
-  };
+    };
 
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -46,6 +44,11 @@ const Popup = ({isModalOpen, setIsModalOpen, options, record}) => {
   
   const [selectedItems, setSelectedItems] = useState([]);
 
+  useEffect(() => {
+    // TODO: fetch the users associated with the document and set them as selectedItems
+    // Until then, just clear the selected items when the modal is opened
+    setSelectedItems([])
+  }, [record])
 
   if (!options) {
     return null;
