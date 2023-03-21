@@ -4,8 +4,9 @@ import { s3Client } from "./libs/s3Client.js"; // Helper function that creates a
 
 
 const run = async () => {
+
   try {
-    const data = await s3Client.send(new ListBucketsCommand({}));
+    const data = await s3Client().send(new ListBucketsCommand({}));
     console.log("Success", data.Buckets)
     return data.Buckets; // For unit tests.
   } catch (err) {

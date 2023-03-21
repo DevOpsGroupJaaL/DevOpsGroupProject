@@ -3,7 +3,7 @@ import { cognitoClient } from './libs/cognitoClient.js';
 
 
 const logout = (accessToken) => {
-    const client = cognitoClient
+    const client = cognitoClient()
     const params = {
         AccessToken: accessToken
       };
