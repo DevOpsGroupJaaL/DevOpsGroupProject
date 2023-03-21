@@ -43,7 +43,6 @@ const DashboardMyFiles = () => {
           .then((response) => response.text())
           .then((body) => {
             const parsedBody = JSON.parse(body);
-
             const reducedParsedBody = parsedBody.res.reduce((acc, curr) => {
               const index = acc.findIndex((item) => item.document_id === curr.document_id);
 
@@ -62,9 +61,6 @@ const DashboardMyFiles = () => {
 
               return acc;
             }, []);
-
-            console.log(reducedParsedBody);
-
             data = reducedParsedBody.res;
             setDataSource(data);
           });
