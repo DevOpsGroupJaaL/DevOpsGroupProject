@@ -37,6 +37,7 @@ const App = () => {
           setPdfFile={setPdfFile}
           setPdfName={setPdfName}
           setCertificatePassword={setCertificatePassword}
+          currentUser={currentUser}
         />
       ),
     },
@@ -80,8 +81,8 @@ const App = () => {
             <Row>
               <Col xs={{ span: 24, offset: 0 }} xl={{ span: 12, offset: 6 }} >
                 <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/dashboard/*" element={<Dashboard />} />
+                  <Route path="/" element={<Dashboard currentUser={currentUser}/>} />
+                  <Route path="/dashboard/*" element={<Dashboard currentUser={currentUser}/>} />
                   <Route
                     path="/upload"
                     element={

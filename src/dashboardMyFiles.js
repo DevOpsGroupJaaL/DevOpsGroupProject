@@ -17,7 +17,7 @@ const getOptions = async () => {
   }
 };
 
-const DashboardMyFiles = () => {
+const DashboardMyFiles = (props) => {
   const [dataSource, setDataSource] = useState(data);
   const [value, setValue] = useState("");
   const [options, setOptions] = useState([]);
@@ -49,8 +49,10 @@ const DashboardMyFiles = () => {
     //         setDataSource(data);
     //       });
     //   });
+    console.log("MyFiles");
+    console.log(props.currentUser.email);
 
-    fetch("/api/users/test@test.com") // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
+    fetch("/api/users/" + props.currentUser.email) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
       .then((response) => response.text())
       .then((body) => {
         const parsedBody = JSON.parse(body);
@@ -81,7 +83,7 @@ const DashboardMyFiles = () => {
             setDataSource(data);
           });
       });
-  }, []);
+  }, [props]);
 
   const columns = [
     {

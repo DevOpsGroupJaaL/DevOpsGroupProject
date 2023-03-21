@@ -1,4 +1,5 @@
 import {DssEndpoint} from "./dss_client.js";
+import fetch from 'node-fetch';
 
 const signDocument = (fileName, userName, fullName, certificatePass) => {
     return fetch(`${DssEndpoint}/sign`, {

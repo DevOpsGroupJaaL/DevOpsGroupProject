@@ -40,13 +40,13 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
     // }
     // );
 
-  const UploadComponent = ({setPdfFile, setPdfName, setNextButton, setCertificatePassword}) => {
+  const UploadComponent = ({setPdfFile, setPdfName, setNextButton, setCertificatePassword, currentUser}) => {
     const props = {
       multiple: false,
       accept: '.pdf',
       customRequest: function (data) {
         console.log(data)
-        const username = "mifsudaleandro"
+        const username = currentUser.username
         const fileName = `${username}/${data.file.name}`
         const formData = new FormData();
         formData.append('pdfFile', data.file);
@@ -62,7 +62,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
             data.onSuccess();
         });
 
-        fetch("/api/users/test@test.com") // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
+        fetch("/api/users/" + currentUser.email) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
           .then((response) => response.text())
           .then((body) => {
             const parsedBody = JSON.parse(body);
