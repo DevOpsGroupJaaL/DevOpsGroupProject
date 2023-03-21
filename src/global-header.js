@@ -1,4 +1,4 @@
-import { Layout,  } from "antd";
+import { Layout  } from "antd";
 import Logo from "./logo.js";
 import Logout from "./logout.js";
 import {Row, Col} from "antd";
