@@ -26,7 +26,7 @@ const get = async (MaxKeys = 1000) => {
       isTruncated = IsTruncated;
       command.input.ContinuationToken = NextContinuationToken;
     }
-    console.log(contents);
+    // console.log(contents);
 
   } catch (err) {
     console.error(err);

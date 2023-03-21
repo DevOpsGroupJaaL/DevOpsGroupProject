@@ -43,7 +43,25 @@ const DashboardMyFiles = () => {
           .then((response) => response.text())
           .then((body) => {
             const parsedBody = JSON.parse(body);
-            data = parsedBody.res;
+            const reducedParsedBody = parsedBody.res.reduce((acc, curr) => {
+              const index = acc.findIndex((item) => item.document_id === curr.document_id);
+
+              if (index === -1) {
+                acc.push({
+                  document_id: curr.document_id,
+                  document_path: curr.document_path,
+                  document_name: curr.document_name,
+                  document_status: curr.document_status,
+                  owner_user_id: curr.owner_user_id,
+                  user_email: [curr.user_email]
+                });
+              } else {
+                acc[index].user_email.push(curr.user_email);
+              }
+
+              return acc;
+            }, []);
+            data = reducedParsedBody.res;
             setDataSource(data);
           });
       });
