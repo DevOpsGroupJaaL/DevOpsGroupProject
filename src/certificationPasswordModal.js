@@ -12,10 +12,12 @@ let randomEmail = () => {
 const USERNAME = "mifsud"
 const NAME = "Aleandro Mifsud"
 
-const CertModal = ({ isModalOpen, setIsModalOpen }) => {
+const CertModal = ({ isModalOpen, setIsModalOpen, currentUser }) => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [canOK, setCanOK] = useState(false);
+	const username = currentUser.username;
+	const name = currentUser.name;
 
 	useEffect(() => {
 		if (password === confirmPassword && password.length > 0) {
@@ -53,9 +55,9 @@ const CertModal = ({ isModalOpen, setIsModalOpen }) => {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
-				'full_name': NAME,
+				'full_name': name,
 				'password': password,
-				'username': USERNAME
+				'username': username
 			})
 		  }).then((response) => {
 			  const status = response.status

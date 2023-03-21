@@ -6,10 +6,12 @@ import { useState } from "react";
 const NAME = "Aleandro Mifsud"
 const USERNAME = "ale"
 
-const StepsComponent = ({ steps, setCurrentFooter, nextButton, certificatePass, pdfName, setPdfFile }) => {
+const StepsComponent = ({ steps, setCurrentFooter, nextButton, certificatePass, pdfName, setPdfFile, currentUser }) => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
   const [disableSignButton, setDisabled] = useState(false);
+  const username = currentUser.username;
+  const name = currentUser.name;
 
   const next = () => {
     setCurrent(current + 1);
@@ -56,8 +58,8 @@ const StepsComponent = ({ steps, setCurrentFooter, nextButton, certificatePass, 
                 body: JSON.stringify({
                   'certificate_pass': certificatePass,
                   'document_dir': pdfName,
-                  'name': NAME,
-                  'username': USERNAME
+                  'name': name,
+                  'username': username
               })
               }).then((response) => {
                   if(response.status === 201) {

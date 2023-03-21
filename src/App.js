@@ -77,6 +77,7 @@ const App = () => {
             <CertModal
               isModalOpen={certModalVisible}
               setIsModalOpen={setCertModalVisible}
+              currentUser={currentUser}
             />
             <Row>
               <Col xs={{ span: 24, offset: 0 }} xl={{ span: 12, offset: 6 }} >
@@ -93,6 +94,7 @@ const App = () => {
                         certificatePass={certificatePass}
                         pdfName={pdfName}
                         setPdfFile={setPdfFile}
+                        currentUser={currentUser}
                       />
                     }
                   />

@@ -35,23 +35,6 @@ const DashboardMyFiles = (props) => {
   }, []);
 
   useEffect(() => {
-    // localStorage.getItem("accessToken")
-    // getCurrentUser(localStorage.getItem("accessToken"))
-    //   .then((response) => response.text()) 
-    //   .then((body) => {
-    //     const parsedBody = JSON.parse(body);
-    //     let userId = parsedBody.user_id;
-    //     fetch(`/api/userOwnedDocuments/${userId}`)
-    //       .then((response) => response.text())
-    //       .then((body) => {
-    //         const parsedBody = JSON.parse(body);
-    //         data = parsedBody.res;
-    //         setDataSource(data);
-    //       });
-    //   });
-    console.log("MyFiles");
-    console.log(props.currentUser.email);
-
     fetch("/api/users/" + props.currentUser.email) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
       .then((response) => response.text())
       .then((body) => {
