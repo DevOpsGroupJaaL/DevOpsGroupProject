@@ -10,11 +10,9 @@ const put = (file, fileName) => {
     Body: file.buffer,
   });
 
-  return s3Client.send(command).then((resp) => {
-      //console.log(resp)
+  return s3Client().send(command).then((resp) => {
       return resp.$metadata.httpStatusCode
-    }).catch()
-
+    })
 };
 
 export default {put};

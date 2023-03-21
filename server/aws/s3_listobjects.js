@@ -20,7 +20,7 @@ const get = async (MaxKeys = 1000) => {
     let contents = "";
 
     while (isTruncated) {
-      const { Contents, IsTruncated, NextContinuationToken } = await s3Client.send(command);
+      const { Contents, IsTruncated, NextContinuationToken } = await s3Client().send(command);
       const contentsList = Contents.map((c) => ` • ${c.Key}`).join("\n");
       contents += contentsList + "\n";
       isTruncated = IsTruncated;
