@@ -86,7 +86,7 @@ const App = () => {
     <BrowserRouter>
       <div className="App">
         <Layout style={{ minHeight: "100vh" }}>
-          <GlobalHeader />
+          <GlobalHeader currentUser={currentUser} />
           <Content>
             <CertModal
               isModalOpen={certModalVisible}
