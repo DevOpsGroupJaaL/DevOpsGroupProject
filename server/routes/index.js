@@ -1,7 +1,6 @@
 // Creating routing to determine how app responds to a client request - part of MIDDLEWARE
 
 import express from 'express';
-
 import dbUsers from '../db/users_documents.js';
 import getS3Object from "../aws/s3_getobject.js"
 import putS3Object from "../aws/s3_putobject.js"
@@ -11,6 +10,7 @@ import { GetCurrentUser } from "../aws/cognito_currentUser.js"
 import multer from 'multer';
 import { createCertificate } from '../dss/create_cert.js';
 import { signDocument } from '../dss/sign_doc.js';
+import { PassThrough } from 'stream';
 
 import opaRequests from '../db/opa_requests.js';
 
@@ -41,25 +41,12 @@ router.get('/', (request, response) => {
 
 router.post('/s3/getObject', function (req, res, next) {
   getS3Object.get(req.body.filename)
-  .then((awsFile) => {
-    // if (awsFile) {
-      console.log("FILE!!!");
-      // res.contentType("text/plain");
-      // res.contentType("application/pdf");
-      // console.log(awsFile)
-      // res.setHeader('Content-Type', 'application/pdf');
-      // res.status(200);
-      // res.send(awsFile);
-    console.log(awsFile)
-    res.setHeader('Content-Type', 'application/pdf');
-    res.send(awsFile);
-    console.log(res)
+  .then((response) => {
+    res.attachment(req.body.filename);
+    res.type('application/pdf');
 
-      // res.send(Buffer.from(awsFile)); // send the file data
-    // } else {
-    //   console.log("File not found");
-    //   res.status(404).send("File not found"); // return a 404 error if file not found
-    // }
+    const stream = response.Body;
+    stream.pipe(res);
   }).catch((error) => {
     console.log("Error:", error);
     res.status(500).send("Error"); // return a 500 error if there is an error
