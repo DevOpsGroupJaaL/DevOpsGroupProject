@@ -1,8 +1,8 @@
-import { Card, Layout, Spin } from "antd";
+import { Card, Layout, Spin, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-import { RetrieveOpaData } from "../opa/opa";
-import { identity } from "lodash";
+// import { RetrieveOpaData } from "../opa/opa";
+// import { identity } from "lodash";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 const { Content } = Layout;
@@ -54,14 +54,22 @@ const MyDocument = ({ pdfFile, pdfName, documentType }) => {
     return (
       <Content>
         <Card title="View File" align="left">
-          <div style={{ overflow: "scroll" }}>
+          <div style={{ overflow: "scroll"}}>
             <Document file={output} onLoadSuccess={onDocumentLoadSuccess}>
-              <Page
-                size="A4"
-                pageNumber={pageNumber}
-                renderTextLayer={false}
-                renderAnnotationLayer={false}
-              />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Button onClick={() => setPageNumber(pageNumber - 1)} disabled={pageNumber <= 1}>Previous Page</Button>
+                <p style={{ margin: '0 10px' }}>Page {pageNumber} of {numPages}</p>
+                <Button onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber >= numPages}>Next Page</Button>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Page 
+                  key={`page_${pageNumber + 1}`}
+                  pageNumber={pageNumber}
+                  size="A4"
+                  renderTextLayer={false}
+                  renderAnnotationLayer={false} 
+                />
+              </div>
             </Document>
           </div>
         </Card>
