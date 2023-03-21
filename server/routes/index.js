@@ -24,16 +24,51 @@ router.get('/', (request, response) => {
 
 // Types of requests,routed thorugh the db folder
 
-//userlist requests
-router.get('/s3/getObject/:name',  function (req, res, next) {
-  // console.log(req);
-  const awsFile =  getS3Object.get(req.params.name);
-  if(awsFile) {
-    res.status(200);
-    res.jsondss_client({body: awsFile});
-  }
-  res.end();
+// //userlist requests
+// router.post('/s3/getObject',  function (req, res, next) {
+//   let pdf = getS3Object.get(req.body.filename)
+//     .then(() => {
+//         if(pdf) {
+//           console.log("FILE!!!")
+//           res.contentType("application/pdf");
+//           res.status(200);
+//           res.send(pdf);
+//         }
+//       }
+//   )
+// });
+
+
+router.post('/s3/getObject', function (req, res, next) {
+  getS3Object.get(req.body.filename)
+  .then((awsFile) => {
+    // if (awsFile) {
+      console.log("FILE!!!");
+      // res.contentType("text/plain");
+      // res.contentType("application/pdf");
+      // console.log(awsFile)
+      // res.setHeader('Content-Type', 'application/pdf');
+      // res.status(200);
+      // res.send(awsFile);
+    console.log(awsFile)
+    res.setHeader('Content-Type', 'application/pdf');
+    res.send(awsFile);
+    console.log(res)
+
+      // res.send(Buffer.from(awsFile)); // send the file data
+    // } else {
+    //   console.log("File not found");
+    //   res.status(404).send("File not found"); // return a 404 error if file not found
+    // }
+  }).catch((error) => {
+    console.log("Error:", error);
+    res.status(500).send("Error"); // return a 500 error if there is an error
+    res.end(); // end the response
+  });
 });
+
+
+
 router.post('/s3/putObject',multer().any() ,  function (req, res, next)
  {
   console.log(req)
@@ -90,9 +125,6 @@ router.post('/userRightsAddMany', dbUsers.postUserRightsAddMany);
 router.post('/documents', dbUsers.postDocuments);
 router.get('/userOwnedDocuments/:userid', dbUsers.getUserOwnedDocuments);
 router.get('/userAccessibleDocuments/:userid', dbUsers.getUserAccessibleDocuments);
-
-
-
 router.get('/userAccessibleDocumentsForOPA', dbUsers.getUserAccessibleDocumentsForOPA);
 router.post('/updateOpaPolicy', opaRequests.UploadOpaDataBackend);
 router.post('/retrieveOpaAccess', opaRequests.RetrieveOpaDataBackend);

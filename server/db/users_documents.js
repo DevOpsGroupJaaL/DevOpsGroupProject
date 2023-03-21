@@ -34,7 +34,7 @@ const getUserIdByEmail = (request, response) => {
         response.json({ message: "User not found" });
         return;
       }
-      console.log(email + ": " + userId)
+      // console.log(email + ": " + userId)
       response.set("Content-Type", "application/json");
       response.status(200).json(userId);
     })
@@ -95,8 +95,8 @@ const getUserOwnedDocuments = (request, response) => {
   .then(results => {
     // handle the results
     const res = results[0]
-    console.log(res)
-    console.log(results[0]);
+    // console.log(res)
+    // console.log(results[0]);
     response.set('Content-Type', 'application/json');
     response.status(200).json({ res });
   })

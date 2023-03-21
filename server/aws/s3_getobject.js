@@ -8,9 +8,12 @@ import { s3Client } from "./libs/s3Client.js"; // Helper function that creates a
 const get = async (Key) => {
     try {
         console.log("Key: ", Key);
-        let response =  await s3Client.send(new GetObjectCommand({Bucket: "jaal-dsdss-documents", Key }));
-        console.log("response: ", response.Body);
-        return response.Body;
+        const response =  await s3Client.send(new GetObjectCommand({Bucket: "jaal-dsdss-documents", Key }));
+        // console.log("response: ", response.Body);
+        const res = await response.Body.transformToString();
+        // console.log(res);
+        return res;
+        // return response.Body;
     } catch (err) {
         console.error(err);
     }

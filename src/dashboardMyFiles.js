@@ -44,7 +44,6 @@ const DashboardMyFiles = (props) => {
         fetch(`/api/userOwnedDocuments/${userId}`)
           .then((response) => response.json())
           .then((body) => {
-            console.log("reducing")
             const reducedParsedBody = body.res.reduce((acc, curr) => {
               const index = acc.findIndex((item) => item.document_id === curr.document_id);
 
@@ -60,10 +59,8 @@ const DashboardMyFiles = (props) => {
               } else {
                 acc[index].user_email.push(curr.user_email);
               }
-
               return acc;
             }, []);
-            console.log("reduced");
             data = reducedParsedBody;
             setDataSource(data);
           });
@@ -75,7 +72,7 @@ const DashboardMyFiles = (props) => {
       title: "File",
       dataIndex: "document_name",
       key: "document_name",
-      render: (text, record) => <Button type="link" href={`view?file=${record.document_name}`}>{text}</Button>,
+      render: (text, record) => <Button type="link" href={`view?file=${encodeURI(record.document_name)}`}>{text}</Button>,
     },
     {
       title: "Associated users",
@@ -85,7 +82,7 @@ const DashboardMyFiles = (props) => {
       render: (list) => (
         <>
           {list === null ? (
-            <Tag color={"red"} key={list}>
+            <Tag color={"red"} key={123}>
               {"No other users associated"}
             </Tag>
           ) : (
