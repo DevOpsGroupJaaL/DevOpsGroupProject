@@ -8,11 +8,8 @@ let randomEmail = () => {
 	return Math.random().toString(36).substring(7) + '@test.com';
 };
 
-// TEMP TO BE REPLACED WITH CURRENT USER DATA
-const USERNAME = "mifsud"
-const NAME = "Aleandro Mifsud"
 
-const CertModal = ({ isModalOpen, setIsModalOpen, currentUser }) => {
+const CertModal = ({ isModalOpen, setIsModalOpen, user}) => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [canOK, setCanOK] = useState(false);
@@ -35,34 +32,32 @@ const CertModal = ({ isModalOpen, setIsModalOpen, currentUser }) => {
 		setConfirmPassword(event.target.value);
 	};
 
+	const handleCancel = () => {
+		console.log(user)
+	};
 	const handleOk = () => {
-		let email = randomEmail();
-		console.log('creating user for ' + email);
-		// TODO: get current user's email via cognito
-
+		console.log('creating user for ' + user.email);
+		
 		fetch('/api/users', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({'email': email}),
+			body: JSON.stringify({'email': user.email}),
 		})
-			.then((response) => console.log(response));
-		// setIsModalOpen(false);
-
 
 		fetch("/api/dss/certificate", {
 			method: 'POST',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
-				'full_name': name,
+				'full_name': user.name,
 				'password': password,
-				'username': username
+				'username': user.username
 			})
 		  }).then((response) => {
 			  const status = response.status
 
-			  if(status == 201) {
+			  if(status === 201) {
 				setIsModalOpen(false);
 			  }
 		  });
@@ -72,6 +67,7 @@ const CertModal = ({ isModalOpen, setIsModalOpen, currentUser }) => {
 		<Modal
 			title="New certificate password"
 			open={isModalOpen}
+			onCancel={handleCancel}
 			footer={[
 				<Button type="primary" disabled={!canOK} onClick={handleOk}>
 					Confirm

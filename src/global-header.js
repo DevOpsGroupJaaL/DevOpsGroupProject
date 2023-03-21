@@ -1,4 +1,4 @@
-import { Layout } from "antd";
+import { Layout  } from "antd";
 import Logo from "./logo.js";
 import Logout from "./logout.js";
 import {Row, Col} from "antd";
@@ -6,7 +6,7 @@ import {Row, Col} from "antd";
 const { Header } = Layout;
 // const { Text } = Typography;
 
-const GlobalHeader = () => {
+const GlobalHeader = ({currentUser}) => {
   return (
     <Header
       className="temp"
@@ -22,7 +22,10 @@ const GlobalHeader = () => {
         <Col span={2}>
           <Logo />
         </Col>
-        <Col span={2} offset={20}>
+        <Col span={2}  offset={18} style={{color:"white"}}>
+          {currentUser.name}
+        </Col>
+        <Col span={2}>
           <Logout />
         </Col>
       </Row>
