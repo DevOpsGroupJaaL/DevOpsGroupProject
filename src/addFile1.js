@@ -27,6 +27,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
         const formData = new FormData();
         formData.append('pdfFile', data.file);
         formData.append('fileName', fileName)
+
         fetch("/api/s3/putObject", {
           method: 'POST',
           body: formData
@@ -36,6 +37,24 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
             setNextButton(true);
             data.onSuccess();
         });
+
+        fetch("/api/users/test@test.com") // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
+          .then((response) => response.text())
+          .then((body) => {
+            const parsedBody = JSON.parse(body);
+            let userId = parsedBody.user_id;
+            console.log(`fetching for user id: ${userId}`);
+            fetch('/api/documents', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({'document_path': fileName, 'document_name': fileName, 'document_status': 'Signed', 'owner_user_id': userId })
+            }).then((response) => console.log(response)
+            );
+        });
+
+
       },
       // onChange(info) {
       //   const { status } = info.file;

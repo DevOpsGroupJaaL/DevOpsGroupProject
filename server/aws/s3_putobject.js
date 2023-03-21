@@ -11,7 +11,7 @@ const put = (file, fileName) => {
   });
 
   return s3Client.send(command).then((resp) => {
-      console.log(resp)
+      //console.log(resp)
       return resp.$metadata.httpStatusCode
     }).catch()
 
