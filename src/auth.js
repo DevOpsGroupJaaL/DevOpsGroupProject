@@ -2,7 +2,14 @@ import axios from "axios"
 const CLIENT_ID = "5id33hkifarn1g675gknb4g546"
 const AUTH_URL = 'https://signsealauth.auth.eu-central-1.amazoncognito.com/oauth2/token'
 const LOGIN_URL = 'https://signsealauth.auth.eu-central-1.amazoncognito.com/login'
-const PORTAL_URL = "http://localhost:3000"
+
+const PORTAL_URL = () => {
+    if(process.env.IS_PROD) {
+        return "https://signseal.systems"
+    } else {
+        return "http://localhost:3000"
+    }
+}
 
 const checkTokens = async (setHasToken, setIsLoggedIn, setCurrentUser, currentUser, isLoggedIn) => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -45,7 +52,7 @@ const setToken = async (authorizationCode) => {
         grant_type: 'authorization_code',
         code: authorizationCode,
         client_id: CLIENT_ID,
-        redirect_uri: `${PORTAL_URL}/dashboard`
+        redirect_uri: `${PORTAL_URL()}/dashboard`
     };
 
     const formBody = Object.keys(details).map(key=>`${encodeURIComponent(key)}=${encodeURIComponent(details[key])}`).join("&");
@@ -103,7 +110,7 @@ const getCurrentUser = async (setCurrentUser, setHasToken, setIsLoggedIn) => {
 
 const redirectLogin = async () => {
     const appClientId = CLIENT_ID;
-    const redirectUri = encodeURI(`${PORTAL_URL}/dashboard`);
+    const redirectUri = encodeURI(`${PORTAL_URL()}/dashboard`);
     const authEndpoint = `${LOGIN_URL}?client_id=${appClientId}&response_type=code&scope=aws.cognito.signin.user.admin&redirect_uri=${redirectUri}`;
     window.location.href = authEndpoint;
 }

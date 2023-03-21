@@ -3,8 +3,15 @@ import { CREDS } from './devAWSCreds.js'
 // Set the AWS Region.
 const REGION = "eu-central-1";
     // Create an Amazon S3 service client object.
-const cognitoClient = new CognitoIdentityProviderClient({ region: REGION , credentials: CREDS});
 
+
+const cognitoClient = () => {
+    if(process.env.IS_PROD) {
+        return new CognitoIdentityProviderClient({ region: REGION});
+    } else {
+        return new CognitoIdentityProviderClient({ region: REGION , credentials: CREDS});
+    }
+}
 
 export { cognitoClient };
 
