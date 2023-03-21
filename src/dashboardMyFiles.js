@@ -72,7 +72,7 @@ const DashboardMyFiles = (props) => {
       title: "File",
       dataIndex: "document_name",
       key: "document_name",
-      render: (text, record) => <Button type="link" href={`view?file=${encodeURI(record.document_name)}`}>{text}</Button>,
+      render: (text, record) => <Button type="link" href={`view?document_id=${encodeURI(record.document_id)}&file=${encodeURI(record.document_name)}&email=${encodeURI(props.currentUser.email)}`}>{text}</Button>,
     },
     {
       title: "Associated users",
@@ -127,14 +127,14 @@ const DashboardMyFiles = (props) => {
             Share
           </Button>
 
-          <Button
+          {/* <Button
             type="primary"
             onClick={() => {
               console.log(record);
             }}
           >
             Delete
-          </Button>
+          </Button> */}
         </Space>
       ),
     },

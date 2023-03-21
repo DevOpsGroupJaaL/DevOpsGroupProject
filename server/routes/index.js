@@ -58,9 +58,7 @@ router.post('/s3/getObject', function (req, res, next) {
 
 router.post('/s3/putObject',multer().any() ,  function (req, res, next)
  {
-  console.log(req)
      putS3Object.put(req.files[0], req.body.fileName).then((replyStatus) => {
-      console.log(replyStatus);
       if(replyStatus == 200) {
         res.status(200);
         res.json({body: "uploadOK"});
@@ -100,8 +98,7 @@ router.post('/dss/certificate', function (req, res) {
     res.status(status);
     res.json({status: status});
     res.end();
-  });
-})
+})})
 router.get('/users', dbUsers.getUsers);
 router.post('/users', dbUsers.postUsers);
 router.get('/users/:email', dbUsers.getUserIdByEmail);

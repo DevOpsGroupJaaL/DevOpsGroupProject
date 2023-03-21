@@ -11,4 +11,4 @@ const AccessDenied = () => {
 };
 
 
-export default AccessDenied;
+export { AccessDenied };

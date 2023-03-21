@@ -1,24 +1,27 @@
 import { Card, Layout, Spin, Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
-// import { RetrieveOpaData } from "../opa/opa";
-// import { identity } from "lodash";
+import opaData from './opaServices.js';
+import { identity } from "lodash";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 const { Content } = Layout;
 
-const MyDocument = ({ pdfFile, pdfName, documentType }) => {
+const MyDocument = ({ pdfFile, pdfName, documentType, currentUser, checkPermissions }) => {
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
   const [output, setOutput] = useState(null);
+  const urlParams = new URLSearchParams(window.location.search);
+
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
   }
 
   function getDocument() {
-    if (documentType === "aws") {
-      if(true) {
+    if (documentType == "aws") {
+      const dec = checkPerms();
+      if(dec) {
       // Create an Amazon S3 service client object.
         fetch(`/api/s3/getObject`, {
           method: "POST",
@@ -32,17 +35,24 @@ const MyDocument = ({ pdfFile, pdfName, documentType }) => {
         .then(blob => {
           setOutput(blob);
         });
-      } else {
-
       }
     } else if (documentType === "local") {
       setOutput(pdfFile);
     }
   }
 
-  // const checkPerms = (name, fileName) => {
-  //   RetrieveOpaData(name, fileName);
-  // }
+  const checkPerms = () => {
+    if (checkPermissions) {
+      return opaData.retrieveOpaData(urlParams.get('email'), urlParams.get('document_id'))
+      .then((value) => {
+        if(value === 200) {
+          return true;
+        } else if (value === 401) {
+          window.location.href = '/accessDenied'
+        }
+      })
+    } else { return true; }
+  }
 
   useEffect(() => {
     getDocument();
@@ -62,12 +72,12 @@ const MyDocument = ({ pdfFile, pdfName, documentType }) => {
                 <Button onClick={() => setPageNumber(pageNumber + 1)} disabled={pageNumber >= numPages}>Next Page</Button>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Page 
+                <Page
                   key={`page_${pageNumber + 1}`}
                   pageNumber={pageNumber}
                   size="A4"
                   renderTextLayer={false}
-                  renderAnnotationLayer={false} 
+                  renderAnnotationLayer={false}
                 />
               </div>
             </Document>

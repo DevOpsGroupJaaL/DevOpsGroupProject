@@ -36,8 +36,6 @@ const CertModal = ({ isModalOpen, setIsModalOpen, user}) => {
 		console.log(user)
 	};
 	const handleOk = () => {
-		console.log('creating user for ' + user.email);
-		
 		fetch('/api/users', {
 			method: 'POST',
 			headers: {

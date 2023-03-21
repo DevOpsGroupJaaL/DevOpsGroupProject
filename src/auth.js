@@ -13,7 +13,7 @@ const checkTokens = async (setHasToken, setIsLoggedIn, setCurrentUser, currentUs
       ) {
         setHasToken(true);
         setIsLoggedIn(true);
-        if(Object.keys(currentUser === undefined || currentUser).length === 0) {
+        if(currentUser === undefined  || Object.keys(currentUser).length === 0) {
             getCurrentUser(setCurrentUser, setHasToken, setIsLoggedIn)
         }
 
@@ -85,7 +85,6 @@ const logout = async () => {
 }
 
 const getCurrentUser = async (setCurrentUser, setHasToken, setIsLoggedIn) => {
-    console.log("fetching")
     fetch('/api/cognito/currentUser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -8,7 +8,6 @@ import { s3Client } from "./libs/s3Client.js"; // Helper function that creates a
 const get = async (Key) => {
 
     try {
-        console.log("Key: ", Key);
         const response =  await s3Client.send(new GetObjectCommand({
             Bucket: "jaal-dsdss-documents",
             Key: Key}

@@ -1,57 +1,56 @@
-import _ from 'lodash'
+import _ from "lodash";
 
-const UploadOpaData = () => {
-    let groupPermissions = [];
-    fetch('/api/userAccessibleDocumentsForOPA')
+const uploadOpaData = () => {
+  let groupPermissions = [];
+  fetch("/api/userAccessibleDocumentsForOPA")
     .then((response) => response.text())
     .then((body) => {
-      console.log(JSON.stringify((JSON.parse(body))["res"]));
-        const flatBody = (JSON.parse(body))["res"];
-        const simplifiedBody = _.mapValues(_.groupBy(flatBody, data => data.document_id), clist => clist.map(data => _.omit(data, 'document_id')));
-        // Loop through each key and value pair
-        for (const [key, value] of Object.entries(simplifiedBody)) {
-          // Check if the value is an array
-          if (Array.isArray(value)) {
-              // Convert each object in the array to an integer
-              simplifiedBody[key] = value.map(user => user.user_id);
-          }
+      const flatBody = JSON.parse(body)["res"];
+      const result = flatBody.reduce((acc, curr) => {
+        const { doc_id, user_id } = curr;
+        if (acc[doc_id]) {
+          acc[doc_id].push(user_id.toString());
+        } else {
+          acc[doc_id] = [user_id.toString()];
         }
-        groupPermissions = {GroupPermissions: simplifiedBody};
+        return acc;
+      }, {});
 
-        console.log(JSON.stringify(groupPermissions));
-        fetch('/api/updateOpaPolicy',
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(groupPermissions)
-          }
-        ).then((response) => response.text())
-         .then((body) => {
-          console.log(JSON.stringify(body));
-         });
-        }
-      );
-  }
+      const finalResult = { GroupPermissions: result };
 
-const RetrieveOpaData = (group, resource) => {
-    console.log(JSON.stringify(({ "group": group, "resource": resource })));
-    console.log("test")
-    fetch('/api/retrieveOpaAccess/',
-    {
-        method: 'POST',
+      fetch("/api/updateOpaPolicy", {
+        method: "POST",
         headers: {
-        'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "group": group, "resource": resource })
-    }
-    ).then((response) => response.status)
+        body: JSON.stringify(finalResult),
+      })
+        .then((response) => response.text())
         .then((body) => {
-        console.log(body);
-        }
-    );
-}
+          console.log(JSON.stringify(body));
+        });
+    });
+};
 
+const retrieveOpaData = (email, resource) => {
+  return fetch(`/api/users/${email}`)
+      .then((response) => response.text())
+      .then((body) => {
+        const parsedBody = JSON.parse(body);
+        let userId = parsedBody.user_id;
+        fetch("/api/retrieveOpaAccess/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ group: userId, resource: resource }),
+        })
+          .then((response) => response.status)
+          .then((body) => {
+            return body;
+          });
+    });
 
-export {UploadOpaData, RetrieveOpaData}
+};
+
+export default { uploadOpaData, retrieveOpaData };

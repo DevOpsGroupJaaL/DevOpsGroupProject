@@ -45,7 +45,6 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
       multiple: false,
       accept: '.pdf',
       customRequest: function (data) {
-        console.log(data)
         const username = currentUser.username
         const fileName = `${username}/${data.file.name}`
         const formData = new FormData();
@@ -67,7 +66,6 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
           .then((body) => {
             const parsedBody = JSON.parse(body);
             let userId = parsedBody.user_id;
-            console.log(`fetching for user id: ${userId}`);
             fetch('/api/documents', {
               method: 'POST',
               headers: {

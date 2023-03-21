@@ -10,6 +10,7 @@ import MyDocument from "./addFile2.js";
 import CertModal from "./certificationPasswordModal.js";
 import React, { useState, useEffect } from "react";
 import { checkTokens } from "./auth.js";
+import { AccessDenied } from "./accessDenied.js";
 
 const { Content, Footer } = Layout;
 
@@ -22,7 +23,7 @@ const App = () => {
   const [certModalVisible, setCertModalVisible] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasToken, setHasToken] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState([]);
 
   const steps = [
     {
@@ -42,20 +43,20 @@ const App = () => {
       step: 2,
       title: "View",
       content: (
-        <MyDocument pdfFile={pdfFile} pdfName={null} documentType="local" />
+        <MyDocument pdfFile={pdfFile} pdfName={null} documentType="local" currentUser={currentUser} checkPermissions={false}/>
       ),
     },
     {
       step: 3,
       title: "Review",
       content: (
-        <MyDocument pdfFile={null} pdfName={pdfName} documentType="aws" />
+        <MyDocument pdfFile={null} pdfName={pdfName} documentType="aws" currentUser={currentUser} checkPermissions={false}/>
       ),
     },
   ];
 
   const urlParams = new URLSearchParams(window.location.search);
-  useEffect(() => {
+  useEffect( () => {
     checkTokens(
       setHasToken,
       setIsLoggedIn,
@@ -69,20 +70,18 @@ const App = () => {
 
   const checkNewAccount = () => {
     if (currentUser.email) {
-      console.log("checking new account");
       fetch(`/api/users/${currentUser.email}`)
         .then((response) => {
           if (response.status === 404) {
-            console.log("new account")
             setCertModalVisible(true);
           }
           else if (response.status === 200) {
-            console.log("old account")
             setCertModalVisible(false);
           }
         })
     }
   }
+
 
   return (
     <BrowserRouter>
@@ -96,9 +95,10 @@ const App = () => {
               user = {currentUser}
             />
             <Row>
-              <Col xs={{ span: 24, offset: 0 }} xl={{ span: 12, offset: 6 }} >
+              <Col xs={{ span: 24, offset: 0 }}  xl={{ span: 16, offset: 4 }} >
                 <Routes>
                   <Route path="/" element={<Dashboard currentUser={currentUser}/>} />
+                  <Route path="/accessDenied" element={<AccessDenied/>} />
                   <Route path="/dashboard/*" element={<Dashboard currentUser={currentUser}/>} />
                   <Route
                     path="/upload"
@@ -114,7 +114,7 @@ const App = () => {
                       />
                     }
                   />
-                  <Route path="/view/*" element={<MyDocument pdfFile={null} pdfName={urlParams.get('file')} documentType="aws" />} />
+                  <Route path="/view/*" element={<MyDocument pdfFile={null} pdfName={urlParams.get('file')} documentType="aws" currentUser={currentUser} checkPermissions={true}/>} />
                 </Routes>
               </Col>
             </Row>
@@ -134,5 +134,5 @@ const App = () => {
       </div>
     </BrowserRouter>
   );
-};
+}
 export default App;
