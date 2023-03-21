@@ -14,7 +14,7 @@ const Dashboard = (props) => {
     {
       key: '2',
       label: `Associated Files`,
-      children: <DashboardAssociatedFiles/>,
+      children: <DashboardAssociatedFiles currentUser={props.currentUser}/>,
     },
   ];
   return (

@@ -50,11 +50,11 @@ const columns = [
 
 let data = [];
 
-const DashboardAssociatedFiles = () => {
+const DashboardAssociatedFiles = (props) => {
   const [dataSource, setDataSource] = useState([]);
 
   useEffect(() => {
-    fetch("/api/users/test@test.com") // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
+    fetch("/api/users/" + props.currentUser.email) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
       .then((response) => response.text())
       .then((body) => {
         const parsedBody = JSON.parse(body);
