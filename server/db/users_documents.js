@@ -24,10 +24,17 @@ const getUsers = (request, response) => {
 
 const getUserIdByEmail = (request, response) => {
   const email = request.params.email; // assuming the email is passed as a URL parameter
+
   pool
     .query("SELECT user_id FROM users WHERE user_email = ?", [email])
     .then((results) => {
       const userId = results[0][0];
+      if (userId === undefined) {
+        response.status(404);
+        response.json({ message: "User not found" });
+        return;
+      }
+      console.log(email + ": " + userId)
       response.set("Content-Type", "application/json");
       response.status(200).json(userId);
     })
