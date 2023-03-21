@@ -62,7 +62,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
             data.onSuccess();
         });
 
-        fetch("/api/users/" + currentUser.email) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
+        fetch(`/api/users/${currentUser.email}`) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
           .then((response) => response.text())
           .then((body) => {
             const parsedBody = JSON.parse(body);
@@ -103,7 +103,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
     const [data, setData] = React.useState(null);
 
-    useEffect(() => {
+    // useEffect(() => {
     //     // fetch("/api").then((res) => res.json()).then((data) => setData(data.message));
     //     // fetch('/api/users')
     //     // .then((response) => response.text())
@@ -137,8 +137,8 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
     //     });
 
     //     console.log("test fetch");
-      }, []
-    );
+    //   }, []
+    // );
 
     return (
           <Card title="Upload a new file" align='left'>

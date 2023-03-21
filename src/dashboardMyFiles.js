@@ -35,16 +35,17 @@ const DashboardMyFiles = (props) => {
   }, []);
 
   useEffect(() => {
-    fetch("/api/users/" + props.currentUser.email) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
-      .then((response) => response.text())
+    // fetch("/api/users/" + props.currentUser.email) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
+    fetch(`/api/users/${props.currentUser.email}`)
+      .then((response) => (response.text()))
       .then((body) => {
         const parsedBody = JSON.parse(body);
         let userId = parsedBody.user_id;
         fetch(`/api/userOwnedDocuments/${userId}`)
-          .then((response) => response.text())
+          .then((response) => response.json())
           .then((body) => {
-            const parsedBody = JSON.parse(body);
-            const reducedParsedBody = parsedBody.res.reduce((acc, curr) => {
+            console.log("reducing")
+            const reducedParsedBody = body.res.reduce((acc, curr) => {
               const index = acc.findIndex((item) => item.document_id === curr.document_id);
 
               if (index === -1) {
@@ -62,7 +63,8 @@ const DashboardMyFiles = (props) => {
 
               return acc;
             }, []);
-            data = reducedParsedBody.res;
+            console.log("reduced");
+            data = reducedParsedBody;
             setDataSource(data);
           });
       });
@@ -77,12 +79,12 @@ const DashboardMyFiles = (props) => {
     },
     {
       title: "Associated users",
-      dataIndex: "associated_users",
-      key: "associated_users",
+      dataIndex: "user_email",
+      key: "user_email",
       // render an antd Tag for each associated user
       render: (list) => (
         <>
-          {list !== null ? (
+          {list === null ? (
             <Tag color={"red"} key={list}>
               {"No other users associated"}
             </Tag>

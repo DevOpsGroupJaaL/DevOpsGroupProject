@@ -89,11 +89,14 @@ const getUserAccessibleDocumentsForOPA = (request, response) => { //assigning an
 const getUserOwnedDocuments = (request, response) => {
   //assigning anonymous function to constant
   const userid = request.params.userid;
+  console.log(userid);
 
-  pool.query('SELECT d.*, u.user_email FROM documents AS d INNER JOIN user_document_rights AS udr ON d.document_id = udr.document_id INNER JOIN users AS u on udr.user_id = u.user_id WHERE (d.owner_user_id = ?)', [userid])
+  pool.query('SELECT d.*, u.user_email FROM documents AS d LEFT OUTER JOIN user_document_rights AS udr ON d.document_id = udr.document_id LEFT JOIN users AS u on udr.user_id = u.user_id WHERE (d.owner_user_id = ?)', [userid])
   .then(results => {
     // handle the results
     const res = results[0]
+    console.log(res)
+    console.log(results[0]);
     response.set('Content-Type', 'application/json');
     response.status(200).json({ res });
   })

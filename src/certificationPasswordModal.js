@@ -13,8 +13,8 @@ const CertModal = ({ isModalOpen, setIsModalOpen, user}) => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [canOK, setCanOK] = useState(false);
-	const username = currentUser.username;
-	const name = currentUser.name;
+	const username = user.username;
+	const name = user.name;
 
 	useEffect(() => {
 		if (password === confirmPassword && password.length > 0) {
