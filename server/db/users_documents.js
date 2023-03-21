@@ -83,22 +83,21 @@ const getUserOwnedDocuments = (request, response) => {
   //assigning anonymous function to constant
   const userid = request.params.userid;
 
-  pool
-    .query("SELECT * FROM documents WHERE (owner_user_id = ?)", [userid])
-    .then((results) => {
-      // handle the results
-      const res = results[0];
-      response.set("Content-Type", "application/json");
-      response.status(200).json({ res });
-    })
-    .catch((error) => {
-      // handle the error
-      var message = `Error!`;
-      console.error(error);
-      response.status(400);
-      response.json({ message });
-    });
-};
+  pool.query('SELECT d.*, u.user_email FROM documents AS d INNER JOIN user_document_rights AS udr ON d.document_id = udr.document_id INNER JOIN users AS u on udr.user_id = u.user_id WHERE (d.owner_user_id = ?)', [userid])
+  .then(results => {
+    // handle the results
+    const res = results[0]
+    response.set('Content-Type', 'application/json');
+    response.status(200).json({ res });
+  })
+  .catch(error => {
+    // handle the error
+    var message = `Error!`;
+    console.error(error);
+    response.status(400);
+    response.json({ message });
+  });
+}
 
 const postUsers = (request, response) => {
   //assigning anonymous function to constant
