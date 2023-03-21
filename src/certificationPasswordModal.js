@@ -34,20 +34,15 @@ const CertModal = ({ isModalOpen, setIsModalOpen, user}) => {
 		console.log(user)
 	};
 	const handleOk = () => {
-		let email = randomEmail();
-		console.log('creating user for ' + email);
-		// TODO: get current user's email via cognito
-
+		console.log('creating user for ' + user.email);
+		
 		fetch('/api/users', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({'email': email}),
+			body: JSON.stringify({'email': user.email}),
 		})
-			.then((response) => console.log(response));
-		// setIsModalOpen(false);
-
 
 		fetch("/api/dss/certificate", {
 			method: 'POST',
@@ -60,7 +55,7 @@ const CertModal = ({ isModalOpen, setIsModalOpen, user}) => {
 		  }).then((response) => {
 			  const status = response.status
 
-			  if(status == 201) {
+			  if(status === 201) {
 				setIsModalOpen(false);
 			  }
 		  });

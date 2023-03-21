@@ -23,10 +23,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [hasToken, setHasToken] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  if (certModalVisible) {
-    // TODO: replace with logic checking for logged in user
-    setCertModalVisible(false);
-  }
+
   const steps = [
     {
       step: 1,
@@ -64,7 +61,26 @@ const App = () => {
       currentUser,
       isLoggedIn
     );
+    checkNewAccount();
   }, [currentUser]);
+
+
+  const checkNewAccount = () => {
+    if (currentUser.email) {
+      console.log("checking new account");
+      fetch(`/api/users/${currentUser.email}`)
+        .then((response) => {
+          if (response.status === 404) {
+            console.log("new account")
+            setCertModalVisible(true);
+          }
+          else if (response.status === 200) {
+            console.log("old account")
+            setCertModalVisible(false);
+          }
+        })
+    }
+  }
 
   return (
     <BrowserRouter>
@@ -75,6 +91,7 @@ const App = () => {
             <CertModal
               isModalOpen={certModalVisible}
               setIsModalOpen={setCertModalVisible}
+              user = {currentUser}
             />
             <Row>
               <Col xs={{ span: 24, offset: 0 }} xl={{ span: 12, offset: 6 }} >
