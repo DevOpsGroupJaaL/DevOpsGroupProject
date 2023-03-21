@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Select   } from 'antd';
+import { UploadOpaData } from './opaServices.js';
 
 
 const Popup = ({isModalOpen, setIsModalOpen, options, record}) => {
-  console.log(record)
-  
+ 
   const handleOk = () => {
     console.log(selectedItems)
     console.log(record)
@@ -33,6 +33,7 @@ const Popup = ({isModalOpen, setIsModalOpen, options, record}) => {
     .then((body) => {
       const parsedBody = JSON.parse(body);
       console.log(parsedBody)
+      UploadOpaData()
     });
     // then close the modal
     setIsModalOpen(false);
