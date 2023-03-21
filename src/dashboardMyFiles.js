@@ -1,6 +1,7 @@
 import { Space, Table, Input, Button, Badge, Tag } from "antd";
 import { useState, useEffect } from "react";
 import Popup from "./assign.js";
+import { render } from "@testing-library/react";
 
 let data = [];
 
@@ -8,9 +9,8 @@ const getOptions = async () => {
   try {
     const response = await fetch("/api/users");
     const data = await response.json();
-    console.log(data.res);
-    const uniqueEmails = [...new Set(data.res.map((user) => user.user_email))];
-    return uniqueEmails;
+    const uniqueUsers = [...new Set(data.res.map((user) => user))];
+    return uniqueUsers;
   } catch (error) {
     console.error(error);
   }
@@ -21,6 +21,7 @@ const DashboardMyFiles = () => {
   const [value, setValue] = useState("");
   const [options, setOptions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [record, setRecord] = useState({});
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -118,17 +119,26 @@ const DashboardMyFiles = () => {
     {
       title: "Action",
       key: "action",
-      render: (_, record) => (
+      render: (record) => (
         <Space size="middle">
-          <Button type="primary" onClick={showModal}>
-            Share{" "}
+          <Button
+            type="primary"
+            onClick={() => {
+              setRecord(record);
+              showModal();
+            }}
+          >
+            Share
           </Button>
-          <Popup
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-            options={options}
-          />
-          <Button type="primary">Delete</Button>
+
+          <Button
+            type="primary"
+            onClick={() => {
+              console.log(record);
+            }}
+          >
+            Delete
+          </Button>
         </Space>
       ),
     },
@@ -151,6 +161,12 @@ const DashboardMyFiles = () => {
 
   return (
     <>
+      <Popup
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        options={options}
+        record={record}
+      />
       <Space>
         <div>{FilterByNameInput}</div>
         <Button href="/upload" type="primary">

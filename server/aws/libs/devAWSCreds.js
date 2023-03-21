@@ -1,7 +1,6 @@
 const CREDS = {
-    accessKeyId: "XXXXXXXXXXXX",
-    secretAccessKey: "XXXXXXXXXXXX",
-    sessionToken: "XXXXXXXXXX"
+    accessKeyId: "XXXXX",
+    secretAccessKey: "XXXXXXX",
+    sessionToken: "XXXXXXXX"
 }
-
 export { CREDS }

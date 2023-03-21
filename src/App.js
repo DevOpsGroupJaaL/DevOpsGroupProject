@@ -1,30 +1,32 @@
 import "./App.css";
 import "antd/dist/reset.css";
-import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Layout } from "antd";
+import { Layout, Row, Col } from "antd";
 import GlobalHeader from "./global-header.js";
 import Dashboard from "./dashboard.js";
 import { StepsComponent, StepsFooter } from "./steps.js";
 import UploadComponent from "./addFile1.js";
 import MyDocument from "./addFile2.js";
-import CertModal from './certificationPasswordModal.js';
+import CertModal from "./certificationPasswordModal.js";
+import React, { useState, useEffect } from "react";
+import { checkTokens } from "./auth.js";
 
 const { Content, Footer } = Layout;
 
 const App = () => {
-	const [currentFooter, setCurrentFooter] = useState(0);
+  const [currentFooter, setCurrentFooter] = useState(0);
   const [pdfFile, setPdfFile] = useState([]);
   const [pdfName, setPdfName] = useState([]);
   const [nextButton, setNextButton] = useState(false);
   const [certificatePass, setCertificatePassword] = useState(null);
-	const [certModalVisible, setCertModalVisible] = useState(false);
-
-	if (certModalVisible) {
-		// TODO: replace with logic checking for logged in user
-		// setCertModalVisible(true);
-		setCertModalVisible(false);
-	}
+  const [certModalVisible, setCertModalVisible] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasToken, setHasToken] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  if (certModalVisible) {
+    // TODO: replace with logic checking for logged in user
+    setCertModalVisible(false);
+  }
   const steps = [
     {
       step: 1,
@@ -54,29 +56,47 @@ const App = () => {
     },
   ];
 
+  useEffect(() => {
+    checkTokens(
+      setHasToken,
+      setIsLoggedIn,
+      setCurrentUser,
+      currentUser,
+      isLoggedIn
+    );
+  }, [currentUser]);
+
   return (
     <BrowserRouter>
       <div className="App">
         <Layout style={{ minHeight: "100vh" }}>
           <GlobalHeader />
           <Content>
-          <CertModal isModalOpen={certModalVisible} setIsModalOpen={setCertModalVisible} />
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route
-                path="/upload"
-                element={
-                  <StepsComponent
-                    nextButton={nextButton}
-                    steps={steps}
-                    setCurrentFooter={setCurrentFooter}
-                    certificatePass={certificatePass}
-                    pdfName={pdfName}
-                    setPdfFile={setPdfFile}
+            <CertModal
+              isModalOpen={certModalVisible}
+              setIsModalOpen={setCertModalVisible}
+            />
+            <Row>
+              <Col xs={{ span: 24, offset: 0 }} xl={{ span: 12, offset: 6 }} >
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/dashboard/*" element={<Dashboard />} />
+                  <Route
+                    path="/upload"
+                    element={
+                      <StepsComponent
+                        nextButton={nextButton}
+                        steps={steps}
+                        setCurrentFooter={setCurrentFooter}
+                        certificatePass={certificatePass}
+                        pdfName={pdfName}
+                        setPdfFile={setPdfFile}
+                      />
+                    }
                   />
-                }
-              />
-            </Routes>
+                </Routes>
+              </Col>
+            </Row>
           </Content>
 
           <Footer>
@@ -94,5 +114,4 @@ const App = () => {
     </BrowserRouter>
   );
 };
-
 export default App;

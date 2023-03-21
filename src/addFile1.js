@@ -15,6 +15,30 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
   const { Content } = Layout;
   const { Dragger } = Upload
 
+    // fetch('http://opa-s-publi-zal2vmv91eh1-1427543192.eu-central-1.elb.amazonaws.com/policy',
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: policyJson
+    //   }
+    //  ).then((response) => response.text())
+    //   .then((body) => {
+    //   console.log(JSON.stringify((JSON.parse(body))["res"]));
+    //     const flatBody = (JSON.parse(body))["res"];
+    //     const simplifiedBody = _.mapValues(_.groupBy(flatBody, data => data.document_id), clist => clist.map(data => _.omit(data, 'document_id')));
+    //     // Loop through each key and value pair
+    //     for (const [key, value] of Object.entries(simplifiedBody)) {
+    //       // Check if the value is an array
+    //       if (Array.isArray(value)) {
+    //           // Convert each object in the array to an integer
+    //           simplifiedBody[key] = value.map(user => user.user_id);
+    //       }
+    //     }
+    //     console.log(JSON.stringify(simplifiedBody));
+    // }
+    // );
 
   const UploadComponent = ({setPdfFile, setPdfName, setNextButton, setCertificatePassword}) => {
     const props = {
@@ -79,7 +103,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
     const [data, setData] = React.useState(null);
 
-    // useEffect(() => {
+    useEffect(() => {
     //     // fetch("/api").then((res) => res.json()).then((data) => setData(data.message));
     //     // fetch('/api/users')
     //     // .then((response) => response.text())
@@ -113,8 +137,8 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
     //     });
 
     //     console.log("test fetch");
-    //   }, []
-    // );
+      }, []
+    );
 
     return (
           <Card title="Upload a new file" align='left'>
