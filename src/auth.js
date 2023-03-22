@@ -8,7 +8,9 @@ const PORTAL_URL = () => {
     if(process.env.IS_PROD == "true") {
         return "http://signseal.systems"
     } else {
-        return "http://localhost:3000"
+        return "http://signseal.systems"
+
+        // return "http://localhost:3000"
     }
 }
 
