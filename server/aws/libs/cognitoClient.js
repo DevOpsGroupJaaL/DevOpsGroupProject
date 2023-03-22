@@ -6,7 +6,7 @@ const REGION = "eu-central-1";
 
 
 const cognitoClient = () => {
-    if(process.env.IS_PROD) {
+    if(process.env.IS_PROD == "true") {
         return new CognitoIdentityProviderClient({ region: REGION});
     } else {
         return new CognitoIdentityProviderClient({ region: REGION , credentials: CREDS});

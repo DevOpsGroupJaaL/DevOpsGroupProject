@@ -4,8 +4,9 @@ const AUTH_URL = 'https://signsealauth.auth.eu-central-1.amazoncognito.com/oauth
 const LOGIN_URL = 'https://signsealauth.auth.eu-central-1.amazoncognito.com/login'
 
 const PORTAL_URL = () => {
-    if(process.env.IS_PROD) {
-        return "https://signseal.systems"
+    console.log(process.env.IS_PROD)
+    if(process.env.IS_PROD == "true") {
+        return "http://signseal.systems"
     } else {
         return "http://localhost:3000"
     }
