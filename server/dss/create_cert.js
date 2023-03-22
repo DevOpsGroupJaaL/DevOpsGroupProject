@@ -1,5 +1,6 @@
 
 import {DssEndpoint} from "./dss_client.js";
+import fetch from 'node-fetch';
 
 
 const createCertificate = (userName, fullName, certificatePass) => {

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Modal, Select   } from 'antd';
-import { UploadOpaData } from './opaServices.js';
+import opaData from './opaServices.js';
 
 
 const Popup = ({isModalOpen, setIsModalOpen, options, record}) => {
- 
+
   const handleOk = () => {
-    console.log(selectedItems)
-    console.log(record)
     fetch('/api/userRightsWipe', {
       method: 'POST',
       headers: {
@@ -29,20 +27,18 @@ const Popup = ({isModalOpen, setIsModalOpen, options, record}) => {
         user_ids: selectedItems
       }),
     })
-    .then((response) => response.text())
-    .then((body) => {
-      const parsedBody = JSON.parse(body);
-      console.log(parsedBody)
-      UploadOpaData()
-    });
+    .then((response) => {
+      opaData.uploadOpaData()
+      setIsModalOpen(false);
+    })
     // then close the modal
-    setIsModalOpen(false);
+
     };
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  
+
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {

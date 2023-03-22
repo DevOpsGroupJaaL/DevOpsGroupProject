@@ -34,7 +34,7 @@ const getUserIdByEmail = (request, response) => {
         response.json({ message: "User not found" });
         return;
       }
-      console.log(email + ": " + userId)
+      // console.log(email + ": " + userId)
       response.set("Content-Type", "application/json");
       response.status(200).json(userId);
     })
@@ -70,7 +70,7 @@ const getUserAccessibleDocuments = (request, response) => {
 };
 
 const getUserAccessibleDocumentsForOPA = (request, response) => { //assigning anonymous function to constant
-  pool.query('SELECT d.document_id, udr.user_id FROM user_document_rights AS udr INNER JOIN documents AS d ON (udr.document_id = d.document_id) ORDER BY d.document_id')
+  pool.query('SELECT CAST(d.document_id as CHAR(50)) as doc_id, udr.user_id FROM user_document_rights AS udr INNER JOIN documents AS d ON (udr.document_id = d.document_id) ORDER BY d.document_id')
   .then(results => {
     // handle the results
     const res = results[0]
@@ -90,10 +90,12 @@ const getUserOwnedDocuments = (request, response) => {
   //assigning anonymous function to constant
   const userid = request.params.userid;
 
-  pool.query('SELECT d.*, u.user_email FROM documents AS d INNER JOIN user_document_rights AS udr ON d.document_id = udr.document_id INNER JOIN users AS u on udr.user_id = u.user_id WHERE (d.owner_user_id = ?)', [userid])
+  pool.query('SELECT d.*, u.user_email FROM documents AS d LEFT OUTER JOIN user_document_rights AS udr ON d.document_id = udr.document_id LEFT JOIN users AS u on udr.user_id = u.user_id WHERE (d.owner_user_id = ?)', [userid])
   .then(results => {
     // handle the results
     const res = results[0]
+    // console.log(res)
+    // console.log(results[0]);
     response.set('Content-Type', 'application/json');
     response.status(200).json({ res });
   })
@@ -214,6 +216,9 @@ const postUserRightsAddMany = (request, response) => {
       [user_ids[i], document_id]
     );
   }
+
+  response.set("Content-Type", "application/json");
+  response.status(200).json({body: "pray it actually worked dawg cause we are not checking it rn" });
 };
 
 const postUserRightsWipe = (request, response) => {

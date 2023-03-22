@@ -13,6 +13,8 @@ const CertModal = ({ isModalOpen, setIsModalOpen, user}) => {
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [canOK, setCanOK] = useState(false);
+	const username = user.username;
+	const name = user.name;
 
 	useEffect(() => {
 		if (password === confirmPassword && password.length > 0) {
@@ -34,8 +36,6 @@ const CertModal = ({ isModalOpen, setIsModalOpen, user}) => {
 		console.log(user)
 	};
 	const handleOk = () => {
-		console.log('creating user for ' + user.email);
-		
 		fetch('/api/users', {
 			method: 'POST',
 			headers: {

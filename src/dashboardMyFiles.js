@@ -2,6 +2,7 @@ import { Space, Table, Input, Button, Badge, Tag } from "antd";
 import { useState, useEffect } from "react";
 import Popup from "./assign.js";
 import { render } from "@testing-library/react";
+import { getCurrentUser } from "./auth.js";
 
 let data = [];
 
@@ -16,7 +17,7 @@ const getOptions = async () => {
   }
 };
 
-const DashboardMyFiles = () => {
+const DashboardMyFiles = (props) => {
   const [dataSource, setDataSource] = useState(data);
   const [value, setValue] = useState("");
   const [options, setOptions] = useState([]);
@@ -34,16 +35,16 @@ const DashboardMyFiles = () => {
   }, []);
 
   useEffect(() => {
-    fetch("/api/users/test@test.com") // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
-      .then((response) => response.text())
+    // fetch("/api/users/" + props.currentUser.email) // TODO: replace with current user's email using cognito getcurrentuser get email and use it here... not good but fine for mvp
+    fetch(`/api/users/${props.currentUser.email}`)
+      .then((response) => (response.text()))
       .then((body) => {
         const parsedBody = JSON.parse(body);
         let userId = parsedBody.user_id;
         fetch(`/api/userOwnedDocuments/${userId}`)
-          .then((response) => response.text())
+          .then((response) => response.json())
           .then((body) => {
-            const parsedBody = JSON.parse(body);
-            const reducedParsedBody = parsedBody.res.reduce((acc, curr) => {
+            const reducedParsedBody = body.res.reduce((acc, curr) => {
               const index = acc.findIndex((item) => item.document_id === curr.document_id);
 
               if (index === -1) {
@@ -58,31 +59,30 @@ const DashboardMyFiles = () => {
               } else {
                 acc[index].user_email.push(curr.user_email);
               }
-
               return acc;
             }, []);
-            data = reducedParsedBody.res;
+            data = reducedParsedBody;
             setDataSource(data);
           });
       });
-  }, []);
+  }, [props]);
 
   const columns = [
     {
       title: "File",
       dataIndex: "document_name",
       key: "document_name",
-      render: (text) => <a>{text}</a>,
+      render: (text, record) => <Button type="link" href={`view?document_id=${encodeURI(record.document_id)}&file=${encodeURI(record.document_name)}&email=${encodeURI(props.currentUser.email)}`}>{text}</Button>,
     },
     {
       title: "Associated users",
-      dataIndex: "associated_users",
-      key: "associated_users",
+      dataIndex: "user_email",
+      key: "user_email",
       // render an antd Tag for each associated user
       render: (list) => (
         <>
-          {list !== null ? (
-            <Tag color={"red"} key={list}>
+          {list === null ? (
+            <Tag color={"red"} key={123}>
               {"No other users associated"}
             </Tag>
           ) : (
@@ -127,14 +127,14 @@ const DashboardMyFiles = () => {
             Share
           </Button>
 
-          <Button
+          {/* <Button
             type="primary"
             onClick={() => {
               console.log(record);
             }}
           >
             Delete
-          </Button>
+          </Button> */}
         </Space>
       ),
     },
@@ -148,7 +148,7 @@ const DashboardMyFiles = () => {
         const currValue = e.target.value;
         setValue(currValue);
         const filteredData = data.filter((entry) =>
-          entry.name.includes(currValue)
+          entry.document_name.includes(currValue)
         );
         setDataSource(filteredData);
       }}
@@ -174,7 +174,7 @@ const DashboardMyFiles = () => {
         pagination={{
           position: "bottomRight",
         }}
-        dataSource={data}
+        dataSource={dataSource}
       />
     </>
   );
