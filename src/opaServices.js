@@ -47,7 +47,10 @@ const retrieveOpaData = (email, resource) => {
         })
           .then((response) => response.status)
           .then((body) => {
-            return body;
+            if (body === 401) {
+              window.location.href = '/accessDenied'
+            }
+            else {return body;}
           });
     });
 

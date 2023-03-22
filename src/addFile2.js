@@ -42,7 +42,7 @@ const MyDocument = ({ pdfFile, pdfName, documentType, currentUser, checkPermissi
   }
 
   const checkPerms = () => {
-    if (checkPermissions) {
+    if (checkPermissions === true) {
       return opaData.retrieveOpaData(urlParams.get('email'), urlParams.get('document_id'))
       .then((value) => {
         if(value === 200) {
