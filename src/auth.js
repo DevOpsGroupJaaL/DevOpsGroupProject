@@ -6,9 +6,9 @@ const LOGIN_URL = 'https://signsealauth.auth.eu-central-1.amazoncognito.com/logi
 const PORTAL_URL = () => {
     console.log(process.env.IS_PROD)
     if(process.env.IS_PROD == "true") {
-        return "http://signseal.systems"
+        return "https://signseal.systems"
     } else {
-        return "http://signseal.systems"
+        return "https://signseal.systems"
 
         // return "http://localhost:3000"
     }
