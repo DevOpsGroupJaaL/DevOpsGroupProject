@@ -148,7 +148,7 @@ const DashboardMyFiles = (props) => {
         const currValue = e.target.value;
         setValue(currValue);
         const filteredData = data.filter((entry) =>
-          entry.name.includes(currValue)
+          entry.document_name.includes(currValue)
         );
         setDataSource(filteredData);
       }}
@@ -174,7 +174,7 @@ const DashboardMyFiles = (props) => {
         pagination={{
           position: "bottomRight",
         }}
-        dataSource={data}
+        dataSource={dataSource}
       />
     </>
   );
