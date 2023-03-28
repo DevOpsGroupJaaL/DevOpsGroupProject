@@ -9,9 +9,7 @@ const cognitoClient = () => {
     if(process.env.IS_PROD == "true") {
         return new CognitoIdentityProviderClient({ region: REGION});
     } else {
-        return new CognitoIdentityProviderClient({ region: REGION});
-
-        // return new CognitoIdentityProviderClient({ region: REGION , credentials: CREDS});
+        return new CognitoIdentityProviderClient({ region: REGION , credentials: CREDS});
     }
 }
 
