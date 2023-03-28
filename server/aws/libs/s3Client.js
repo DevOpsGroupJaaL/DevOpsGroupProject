@@ -9,9 +9,7 @@ const s3Client = () => {
     if(process.env.IS_PROD == "true") {
         return new S3Client({ region: REGION});
     } else {
-        return new S3Client({ region: REGION});
-
-        // return new S3Client({ region: REGION , credentials: CREDS});
+        return new S3Client({ region: REGION , credentials: CREDS});
 
     }
 }
