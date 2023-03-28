@@ -1,3 +1,6 @@
+# Reviewer Note:
+All Client IDs and URLs have been replaced with "XXXXXX" to anonymse the code :)
+
 # App Related Commands
 
 Make sure your terminal is in the directory of the app.
@@ -22,8 +25,8 @@ The running server can be access here: [http://localhost:3000](http://localhost:
 
 To use functionality from the AWS SDK you need to add credentials to your local environemnt. The following steps are required:
 
-1. Go to [our organisations login page](https://signseal.awsapps.com/start#/)
-2. Click on `AWS Account` > `Luke Bezzina` > ` Command line or programmatic access`
+1. Go to [your organisations login page]()
+2. Click on `AWS Account` > `Root Acc Name` > ` Command line or programmatic access`
 3. Go to the your respective OS at the top of the modal
 4. Copy the values in `Set AWS environment variables` (if you click on them they should copy for you)
 5. Paste the env vars in the terminal that you will use to run the npm server
@@ -40,4 +43,4 @@ Technically, you shoudnt need to deploy manually after CodeBuild and Pipelines a
 3. Open a terminal in the directory of the app
 4. Run `eb init`, choose the `eu-central` (5) region, and the correct EB
 5. Run `eb deploy`
-6. Go to [http://signseal.systems](http://signseal.systems) to verify the deployment was succesful
+6. Go to [your website]() to verify the deployment was succesful

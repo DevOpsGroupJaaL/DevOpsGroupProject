@@ -1,16 +1,14 @@
 import axios from "axios"
-const CLIENT_ID = "5id33hkifarn1g675gknb4g546"
-const AUTH_URL = 'https://signsealauth.auth.eu-central-1.amazoncognito.com/oauth2/token'
-const LOGIN_URL = 'https://signsealauth.auth.eu-central-1.amazoncognito.com/login'
+const CLIENT_ID = "XXXXXXXXXXX"
+const AUTH_URL = 'XXXXXX/oauth2/token'
+const LOGIN_URL = 'XXXXXXXXXX/login'
 
 const PORTAL_URL = () => {
     console.log(process.env.IS_PROD)
     if(process.env.IS_PROD == "true") {
-        return "https://signseal.systems"
+        return "XXXXXXXXXXXX"
     } else {
-        return "https://signseal.systems"
-
-        // return "http://localhost:3000"
+        return "http://localhost:3000"
     }
 }
 
